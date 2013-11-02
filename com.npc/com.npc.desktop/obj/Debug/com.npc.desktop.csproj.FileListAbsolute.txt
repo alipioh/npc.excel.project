@@ -1,0 +1,13 @@
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe.config
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.pdb
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\bin\Debug\EntityFramework.dll
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\bin\Debug\EntityFramework.xml
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csprojResolveAssemblyReference.cache
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.Properties.Resources.resources
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csproj.GenerateResource.Cache
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.exe
+c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.pdb
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe.config
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.exe
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.pdb
