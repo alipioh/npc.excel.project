@@ -11,3 +11,12 @@ c:\users\alipioh\documents\visual studio 2013\Projects\com.npc\com.npc.desktop\o
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe.config
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.exe
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.pdb
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.pdb
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\EntityFramework.dll
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\EntityFramework.xml
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.Form1.resources
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.Properties.Resources.resources
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csproj.GenerateResource.Cache
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe.CodeAnalysisLog.xml
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe.lastcodeanalysissucceeded

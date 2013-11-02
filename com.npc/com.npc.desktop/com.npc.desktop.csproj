@@ -50,11 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="com.npc.desktop.entities\Area.cs" />
+    <Compile Include="com.npc.desktop.entities\AreaSessionData.cs" />
     <Compile Include="com.npc.desktop.entities\DataType.cs" />
     <Compile Include="com.npc.desktop.entities\DataValues.cs" />
     <Compile Include="com.npc.desktop.entities\Dbase.cs" />
     <Compile Include="com.npc.desktop.entities\Plant.cs" />
+    <Compile Include="com.npc.desktop.entities\Record.cs" />
     <Compile Include="com.npc.desktop.entities\Region.cs" />
+    <Compile Include="com.npc.desktop.entities\RegionSessionData.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

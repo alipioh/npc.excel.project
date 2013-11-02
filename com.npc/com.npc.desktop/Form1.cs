@@ -19,11 +19,11 @@ namespace com.npc.desktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (var data = new Dbase()) {
-                Area area1 = new Area();
-                area1.name = "LUZON";
-                data.areas.Add(area1);
-            }
+            AreaSessionData areaSessionData = new AreaSessionData();
+            IList<Area> areas = areaSessionData.getAllRegionsByLuzonArea();
+            //MessageBox.Show(areas.Count.ToString());
+
+            //dataGridView1.DataSource = areaSessionData.getAllRegionsByLuzonArea();
         }
     }
 }

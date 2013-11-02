@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ *  Author: HERNAN JOHN B. ALIPIO 
+ *  Description : Data repositories for data values
+ *  Date Created: November 1, 2013 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +13,7 @@ namespace com.npc.desktop.com.npc.desktop.entities
     class DataValues
     {
         public DataValues() { }
+        public Int32 dataValuesId { get; set; }
         public Double d2008 { get; set; }
         public Double d2009 { get; set; }
         public Double d2010 { get; set; }

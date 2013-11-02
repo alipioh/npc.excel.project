@@ -2,7 +2,7 @@
  *  Author: HERNAN JOHN B. ALIPIO 
  *  Description : Data repositories for data type
  *              : DataTypes are, Demand & Energy Supplies
- *  Date Created: November 1, 2013 03:12 PM  
+ *  Date Created: November 1, 2013 
  */
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace com.npc.desktop.com.npc.desktop.entities
     class DataType
     {
         public DataType() { }
-        public Int32 DaTypeId { get; set; }
+        public Int32 dataTypeId { get; set; }
         public String name { get; set; }
     }
 }
