@@ -17,13 +17,35 @@ namespace com.npc.desktop
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            AreaSessionData areaSessionData = new AreaSessionData();
-            IList<Area> areas = areaSessionData.getAllRegionsByLuzonArea();
-            //MessageBox.Show(areas.Count.ToString());
+        private void button1_Click(object sender, EventArgs e){
+            try {
+                //using (var db = new Dbase())
+                //{
+                //    Area area = new Area();
+                //    area.name = Area.LUZON;
 
-            //dataGridView1.DataSource = areaSessionData.getAllRegionsByLuzonArea();
+                //    Regions region = new Regions();
+                //    region.name = "region 1";
+                //    region.area = area;
+
+                //    db.regions.Add(region);
+                //    db.SaveChanges();
+                //    MessageBox.Show("Saved!");
+                //}
+                Regions region = new Regions();
+                region.name = "region 1 ";
+             
+                AreaSessionData areaSessionData = new AreaSessionData();
+                areaSessionData.getLuzonArea().regions.Add(region);
+                //dataGridView1.DataSource = areaSessionData.getAllRegionsByArea("luzons");
+                dataGridView1.DataSource = new RegionSessionData().getAllPlantsInRegion1();
+
+                //dataGridView1.DataSource = new RegionSessionData().getAllRegionsInLuzon();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
     }
 }

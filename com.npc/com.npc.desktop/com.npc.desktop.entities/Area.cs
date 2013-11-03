@@ -17,14 +17,25 @@ namespace com.npc.desktop.com.npc.desktop.entities
     [Table("npcAreas")]
     class Area
     {
+        #region ATTRIBUTES
         public static readonly String LUZON = "luzon";
         public static readonly String VISAYAS = "visayas";
         public static readonly String MINDANAO = "mindanao";
+        #endregion
 
+        public Area()
+        {
+            regions = new List<Regions>();
+        }
+
+        #region ENCAPSULATION METHODS OR ACCESSOR & MUTATOR METHODS
         [Key]
         public Int32 areaId { get; set; }
         public String name { get; set; }
+        #endregion
 
-        public IList<Region> regions { get; set; }
+        #region COLLECTIONS
+        public ICollection<Regions> regions { get; set; }
+        #endregion
     }
 }

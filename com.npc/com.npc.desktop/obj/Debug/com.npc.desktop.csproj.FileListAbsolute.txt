@@ -18,5 +18,4 @@ C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debu
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.Form1.resources
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.Properties.Resources.resources
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csproj.GenerateResource.Cache
-C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe.CodeAnalysisLog.xml
-C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\com.npc.desktop.exe.lastcodeanalysissucceeded
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csprojResolveAssemblyReference.cache
