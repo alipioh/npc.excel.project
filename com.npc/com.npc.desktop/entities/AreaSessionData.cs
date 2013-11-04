@@ -10,11 +10,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
     [Serializable]
-    class AreaSessionData
+    class AreaSessionData : BaseSession
     {
+
         public IList<Area> getAllRegionsByArea(String area)
         {
             try
@@ -27,6 +28,7 @@ namespace com.npc.desktop.com.npc.desktop.entities
                         .Where(a => a.name == area)
                         .ToList<Area>();
 
+                    
                     return areas;
                 }
             }
@@ -42,22 +44,28 @@ namespace com.npc.desktop.com.npc.desktop.entities
             return Dbase.getCurrentInstance().areas.ToList<Area>();
         }
 
+        public Area getAreaByName(String areaName)
+        {
+            return Dbase.getCurrentInstance().areas
+                    .Where(a => a.name == areaName)
+                    .FirstOrDefault<Area>();
+        }
+
         public Area getLuzonArea()
         {
-            return getAllRegionsByArea(Area.LUZON)[0];
+            return getAreaByName(Area.LUZON);
         }
 
         public Area getMindanaoArea()
         {
-            return getAllRegionsByArea(Area.MINDANAO)[0];
+            return getAreaByName(Area.MINDANAO);
         }
 
         public Area getVisayasArea()
         {
-            return getAllRegionsByArea(Area.VISAYAS)[0];
+            return getAreaByName(Area.VISAYAS);
         }
-
-            
+    
         public IList<Area> getAllRegionsByLuzonArea() {
             return getAllRegionsByArea(Area.LUZON);
         }

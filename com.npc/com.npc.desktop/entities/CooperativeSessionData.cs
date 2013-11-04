@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
-    class CooperativeSessionData
+    class CooperativeSessionData : BaseSession
     {
         public Cooperative getCooperativeByName(String cooperativeName) {
             return Dbase.getCurrentInstance().cooperatives
                     .Where(c => c.name == cooperativeName)
-                    .ToList<Cooperative>()[0];
+                    .FirstOrDefault<Cooperative>();
         }
 
         public IList<Plant> getAllPlantsByCoopName(String cooperativeName)

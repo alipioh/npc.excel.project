@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
     [Serializable]
     [Table("npcCooperative")]
@@ -24,6 +24,7 @@ namespace com.npc.desktop.com.npc.desktop.entities
         
         #region FOREIGN KEY FOR REGION
         public Int32 regionId { get; set; }
+        
         [ForeignKey("regionId")]
         public virtual Regions region { get; set; }
         #endregion

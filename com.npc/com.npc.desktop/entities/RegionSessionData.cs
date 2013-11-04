@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
-    class RegionSessionData
+    class RegionSessionData : BaseSession
     {
         #region REGIONS METHOD
         /// <summary>
@@ -15,83 +15,90 @@ namespace com.npc.desktop.com.npc.desktop.entities
         /// <param name="region"></param>
         /// <returns></returns>
 
+        public Regions getRegionByName(String regionName)
+        {
+            return Dbase.getCurrentInstance().regions
+                    .Where(r => r.name == regionName)
+                    .FirstOrDefault<Regions>();
+        }
+
         public Regions getRegion1()
         {
-            return getAllCoopsByRegion(Regions._1)[0];
+            return getRegionByName(Regions._1);
         }
 
         public Regions getRegion2()
         {
-            return getAllCoopsByRegion(Regions._2)[0];
+            return getRegionByName(Regions._2);
         }
 
         public Regions getRegion3()
         {
-            return getAllCoopsByRegion(Regions._3)[0];
+            return getRegionByName(Regions._3);
         }
 
         public Regions getRegion4A()
         {
-            return getAllCoopsByRegion(Regions._4_A)[0];
+            return getRegionByName(Regions._4_A);
         }
 
         public Regions getRegion4B()
         {
-            return getAllCoopsByRegion(Regions._4_B)[0];
+            return getRegionByName(Regions._4_B);
         }
 
         public Regions getRegion5()
         {
-            return getAllCoopsByRegion(Regions._5)[0];
+            return getRegionByName(Regions._5);
         }
 
         public Regions getRegion6() {
-            return getAllCoopsByRegion(Regions._6)[0];
+            return getRegionByName(Regions._6);
         }
 
         public Regions getRegion7()
         {
-            return getAllCoopsByRegion(Regions._7)[0];
+            return getRegionByName(Regions._7);
         }
 
         public Regions getRegion8()
         {
-            return getAllCoopsByRegion(Regions._8)[0];
+            return getRegionByName(Regions._8);
         }
 
         public Regions getRegion9()
         {
-            return getAllCoopsByRegion(Regions._9)[0];
+            return getRegionByName(Regions._9);
         }
 
         public Regions getRegion10()
         {
-            return getAllCoopsByRegion(Regions._10)[0];
+            return getRegionByName(Regions._10);
         }
 
         public Regions getRegion11()
         {
-            return getAllCoopsByRegion(Regions._11)[0];
+            return getRegionByName(Regions._11);
         }
 
         public Regions getRegion12()
         {
-            return getAllCoopsByRegion(Regions._12)[0];
+            return getRegionByName(Regions._12);
         }
 
         public Regions getRegionCAR()
         {
-            return getAllCoopsByRegion(Regions._CAR)[0];
+            return getRegionByName(Regions._CAR);
         }
 
         public Regions getRegionARMM()
         {
-            return getAllCoopsByRegion(Regions._ARMM)[0];
+            return getRegionByName(Regions._ARMM);
         }
 
         public Regions getRegionCARAGA()
         {
-            return getAllCoopsByRegion(Regions._CARAGA)[0];
+            return getRegionByName(Regions._CARAGA);
         }
 
         public IList<Regions> getAllRegionsInLuzon()

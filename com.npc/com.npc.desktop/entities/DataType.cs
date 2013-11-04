@@ -11,12 +11,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
     [Serializable]
     [Table("npcDataType")]
-    class DataType
+    class DataType 
     {
+        public static readonly String _KH = "kh";
+        public static readonly String _MWH = "mwh";
+
         public DataType() {
             dataValues = new List<DataValues>();
         }

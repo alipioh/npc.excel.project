@@ -11,6 +11,21 @@
     <AssemblyName>com.npc.desktop</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +50,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -49,19 +67,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="com.npc.desktop.entities\Area.cs" />
-    <Compile Include="com.npc.desktop.entities\AreaSessionData.cs" />
-    <Compile Include="com.npc.desktop.entities\Cooperative.cs" />
-    <Compile Include="com.npc.desktop.entities\CooperativeSessionData.cs" />
-    <Compile Include="com.npc.desktop.entities\DataCategory.cs" />
-    <Compile Include="com.npc.desktop.entities\DataType.cs" />
-    <Compile Include="com.npc.desktop.entities\DataValues.cs" />
-    <Compile Include="com.npc.desktop.entities\Dbase.cs" />
-    <Compile Include="com.npc.desktop.entities\DbaseInitializer.cs" />
-    <Compile Include="com.npc.desktop.entities\Plant.cs" />
-    <Compile Include="com.npc.desktop.entities\PlantDataSession.cs" />
-    <Compile Include="com.npc.desktop.entities\Regions.cs" />
-    <Compile Include="com.npc.desktop.entities\RegionSessionData.cs" />
+    <Compile Include="entities\Area.cs" />
+    <Compile Include="entities\AreaSessionData.cs" />
+    <Compile Include="entities\BaseSession.cs" />
+    <Compile Include="entities\Cooperative.cs" />
+    <Compile Include="entities\CooperativeSessionData.cs" />
+    <Compile Include="entities\DataCategory.cs" />
+    <Compile Include="entities\DataCategorySessionData.cs" />
+    <Compile Include="entities\DataType.cs" />
+    <Compile Include="entities\DataTypeSessionData.cs" />
+    <Compile Include="entities\DataValues.cs" />
+    <Compile Include="entities\DataValuesDataSession.cs" />
+    <Compile Include="entities\Dbase.cs" />
+    <Compile Include="entities\DbaseInitializer.cs" />
+    <Compile Include="entities\Plant.cs" />
+    <Compile Include="entities\PlantDataSession.cs" />
+    <Compile Include="entities\Regions.cs" />
+    <Compile Include="entities\RegionSessionData.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +118,28 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

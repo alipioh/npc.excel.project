@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
-    class PlantDataSession
+    class PlantDataSession : BaseSession
     {
         public Plant getPlantByName(String plantName){
             return Dbase.getCurrentInstance()

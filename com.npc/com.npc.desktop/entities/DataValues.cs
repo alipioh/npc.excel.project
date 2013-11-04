@@ -10,11 +10,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
     [Serializable]
     [Table("npcDataValues")]
-    class DataValues
+    class DataValues 
     {
         public DataValues() { }
 

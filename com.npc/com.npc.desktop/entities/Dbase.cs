@@ -9,7 +9,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 
-namespace com.npc.desktop.com.npc.desktop.entities
+namespace com.npc.desktop.entities
 {
     class Dbase : DbContext
     {
@@ -27,7 +27,6 @@ namespace com.npc.desktop.com.npc.desktop.entities
                 .HasRequired<Area>(a => a.area)
                 .WithMany(a => a.regions)
                 .HasForeignKey(a => a.areaId);
-
 
             modelBuilder.Entity<Cooperative>()
                 .HasRequired<Regions>(r => r.region)
@@ -64,5 +63,7 @@ namespace com.npc.desktop.com.npc.desktop.entities
         public DbSet<Plant> plants { get; set; }
         public DbSet<Regions> regions { get; set; }
         public DbSet<Cooperative> cooperatives { get; set; }
+        public DbSet<DataCategory> dataCategories { get; set; }
+
     }
 }
