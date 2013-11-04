@@ -51,11 +51,15 @@
   <ItemGroup>
     <Compile Include="com.npc.desktop.entities\Area.cs" />
     <Compile Include="com.npc.desktop.entities\AreaSessionData.cs" />
+    <Compile Include="com.npc.desktop.entities\Cooperative.cs" />
+    <Compile Include="com.npc.desktop.entities\CooperativeSessionData.cs" />
+    <Compile Include="com.npc.desktop.entities\DataCategory.cs" />
     <Compile Include="com.npc.desktop.entities\DataType.cs" />
     <Compile Include="com.npc.desktop.entities\DataValues.cs" />
     <Compile Include="com.npc.desktop.entities\Dbase.cs" />
     <Compile Include="com.npc.desktop.entities\DbaseInitializer.cs" />
     <Compile Include="com.npc.desktop.entities\Plant.cs" />
+    <Compile Include="com.npc.desktop.entities\PlantDataSession.cs" />
     <Compile Include="com.npc.desktop.entities\Regions.cs" />
     <Compile Include="com.npc.desktop.entities\RegionSessionData.cs" />
     <Compile Include="Form1.cs">

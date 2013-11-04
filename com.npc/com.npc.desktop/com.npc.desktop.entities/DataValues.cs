@@ -51,5 +51,13 @@ namespace com.npc.desktop.com.npc.desktop.entities
         [ForeignKey("plantId")]
         public virtual Plant plant { get; set; }
         #endregion
+
+        #region FOREIGN KEY FOR DATA CATEGORY
+        public Int32 dataCategoryId { get; set; }
+        
+        [ForeignKey("dataCategoryId")]
+        public virtual DataCategory dataCategory { get; set; }
+        #endregion
+
     }
 }

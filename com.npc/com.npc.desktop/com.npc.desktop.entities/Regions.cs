@@ -31,11 +31,15 @@ namespace com.npc.desktop.com.npc.desktop.entities
         public static readonly String _10 = "Region 10";
         public static readonly String _11 = "Region 11";
         public static readonly String _12 = "Region 12";
+        public static readonly String _ARMM = "ARMM";
+        public static readonly String _CARAGA = "CARAGA";
+        public static readonly String _CAR = "CAR";
+
         #endregion
 
         public Regions()
         {
-            plants = new List<Plant>();
+            cooperatives = new List<Cooperative>();
         }
 
         #region ENCAPSULATION METHODS / ACCESSOR & MUTATOR METHODS
@@ -52,7 +56,7 @@ namespace com.npc.desktop.com.npc.desktop.entities
         #endregion
 
         #region COLLECTIONS
-        public ICollection<Plant> plants { get; set; }
+        public ICollection<Cooperative> cooperatives { get; set; }
         #endregion
     }
 }

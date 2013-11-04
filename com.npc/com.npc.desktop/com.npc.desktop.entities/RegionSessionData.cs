@@ -17,66 +17,81 @@ namespace com.npc.desktop.com.npc.desktop.entities
 
         public Regions getRegion1()
         {
-            return getAllPlantsByRegion(Regions._1)[0];
+            return getAllCoopsByRegion(Regions._1)[0];
         }
 
         public Regions getRegion2()
         {
-            return getAllPlantsByRegion(Regions._2)[0];
+            return getAllCoopsByRegion(Regions._2)[0];
         }
 
         public Regions getRegion3()
         {
-            return getAllPlantsByRegion(Regions._3)[0];
+            return getAllCoopsByRegion(Regions._3)[0];
         }
 
         public Regions getRegion4A()
         {
-            return getAllPlantsByRegion(Regions._4_A)[0];
+            return getAllCoopsByRegion(Regions._4_A)[0];
         }
 
         public Regions getRegion4B()
         {
-            return getAllPlantsByRegion(Regions._4_B)[0];
+            return getAllCoopsByRegion(Regions._4_B)[0];
         }
 
         public Regions getRegion5()
         {
-            return getAllPlantsByRegion(Regions._5)[0];
+            return getAllCoopsByRegion(Regions._5)[0];
         }
 
         public Regions getRegion6() {
-            return getAllPlantsByRegion(Regions._6)[0];
+            return getAllCoopsByRegion(Regions._6)[0];
         }
 
         public Regions getRegion7()
         {
-            return getAllPlantsByRegion(Regions._7)[0];
+            return getAllCoopsByRegion(Regions._7)[0];
         }
 
         public Regions getRegion8()
         {
-            return getAllPlantsByRegion(Regions._8)[0];
+            return getAllCoopsByRegion(Regions._8)[0];
         }
 
         public Regions getRegion9()
         {
-            return getAllPlantsByRegion(Regions._9)[0];
+            return getAllCoopsByRegion(Regions._9)[0];
         }
 
         public Regions getRegion10()
         {
-            return getAllPlantsByRegion(Regions._10)[0];
+            return getAllCoopsByRegion(Regions._10)[0];
         }
 
         public Regions getRegion11()
         {
-            return getAllPlantsByRegion(Regions._11)[0];
+            return getAllCoopsByRegion(Regions._11)[0];
         }
 
         public Regions getRegion12()
         {
-            return getAllPlantsByRegion(Regions._12)[0];
+            return getAllCoopsByRegion(Regions._12)[0];
+        }
+
+        public Regions getRegionCAR()
+        {
+            return getAllCoopsByRegion(Regions._CAR)[0];
+        }
+
+        public Regions getRegionARMM()
+        {
+            return getAllCoopsByRegion(Regions._ARMM)[0];
+        }
+
+        public Regions getRegionCARAGA()
+        {
+            return getAllCoopsByRegion(Regions._CARAGA)[0];
         }
 
         public IList<Regions> getAllRegionsInLuzon()
@@ -98,61 +113,96 @@ namespace com.npc.desktop.com.npc.desktop.entities
         {
             return Dbase.getCurrentInstance().regions.ToList<Regions>();
         }
-        public IList<Regions> getAllPlantsByRegion(String region) {
+
+        private IList<Regions> getAllCoopsByRegion(String region) {
             return Dbase.getCurrentInstance().regions.Where(r => r.name == region).ToList<Regions>();
         }
-        public IList<Plant> getAllPlantsInRegion1()
+
+        public IList<Cooperative> getAllCoopByRegion(String region)
         {
-            return (IList<Plant>) getAllPlantsByRegion(Regions._1)[0].plants;
+            return (IList<Cooperative>)getAllCoopsByRegion(region)[0].cooperatives;
         }
-        public IList<Regions> getAllPlantsInRegion2()
+
+        public IList<Cooperative> getAllCoopInRegion1()
         {
-            return getAllPlantsByRegion(Regions._2);
+            return getAllCoopByRegion(Regions._1);
         }
-        public IList<Regions> getAllPlantsInRegion3()
+
+        public IList<Cooperative> getAllCoopInRegion2()
         {
-            return getAllPlantsByRegion(Regions._3);
+            return getAllCoopByRegion(Regions._2);
         }
-        public IList<Regions> getAllPlantsInRegion4A()
+
+        public IList<Cooperative> getAllCoopInRegion3()
         {
-            return getAllPlantsByRegion(Regions._4_A);
+            return getAllCoopByRegion(Regions._3);
         }
-        public IList<Regions> getAllPlantsInRegion4B()
+
+        public IList<Cooperative> getAllCoopInRegion4A()
         {
-            return getAllPlantsByRegion(Regions._4_B);
+            return getAllCoopByRegion(Regions._4_A);
         }
-        public IList<Regions> getAllPlantsInRegion5()
+
+        public IList<Cooperative> getAllCoopInRegion4B()
         {
-            return getAllPlantsByRegion(Regions._5);
+            return getAllCoopByRegion(Regions._4_B);
         }
-        public IList<Regions> getAllPlantsInRegion6()
+
+        public IList<Cooperative> getAllCoopInRegion5()
         {
-            return getAllPlantsByRegion(Regions._6);
+            return getAllCoopByRegion(Regions._5);
         }
-        public IList<Regions> getAllPlantsInRegion7()
+
+        public IList<Cooperative> getAllCoopInRegion6()
         {
-            return getAllPlantsByRegion(Regions._7);
+            return getAllCoopByRegion(Regions._6);
         }
-        public IList<Regions> getAllPlantsInRegion8()
+
+        public IList<Cooperative> getAllCoopInRegion7()
         {
-            return getAllPlantsByRegion(Regions._8);
+            return getAllCoopByRegion(Regions._7);
         }
-        public IList<Regions> getAllPlantsInRegion9()
+
+        public IList<Cooperative> getAllCoopInRegion8()
         {
-            return getAllPlantsByRegion(Regions._9);
+            return getAllCoopByRegion(Regions._8);
         }
-        public IList<Regions> getAllPlantsInRegion10()
+
+        public IList<Cooperative> getAllCoopInRegion9()
         {
-            return getAllPlantsByRegion(Regions._10);
+            return getAllCoopByRegion(Regions._9);
         }
-        public IList<Regions> getAllPlantsInRegion11()
+
+        public IList<Cooperative> getAllCoopInRegion10()
         {
-            return getAllPlantsByRegion(Regions._11);
+            return getAllCoopByRegion(Regions._10);
         }
-        public IList<Regions> getAllPlantsInRegion12()
+
+        public IList<Cooperative> getAllCoopInRegion11()
         {
-            return getAllPlantsByRegion(Regions._12);
+            return getAllCoopByRegion(Regions._11);
         }
+
+        public IList<Cooperative> getAllCoopInRegion12()
+        {
+            return getAllCoopByRegion(Regions._12);
+        }
+
+        public IList<Cooperative> getAllCoopInARMM()
+        {
+            return getAllCoopByRegion(Regions._ARMM);
+        }
+
+        public IList<Cooperative> getAllCoopInCAR()
+        {
+            return getAllCoopByRegion(Regions._CAR);
+        }
+
+        public IList<Cooperative> getAllCoopInCARAGA()
+        {
+            return getAllCoopByRegion(Regions._CARAGA);
+        }
+
         #endregion   
     }
 }

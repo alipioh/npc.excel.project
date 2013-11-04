@@ -14,7 +14,6 @@ namespace com.npc.desktop.com.npc.desktop.entities
     class Dbase : DbContext
     {
         public Dbase() : base() {
-            //Database.SetInitializer<Dbase>(new DropCreateDatabaseIfModelChanges<Dbase>());
             Database.SetInitializer<Dbase>(new DbaseInitializer());
         }
 
@@ -29,10 +28,16 @@ namespace com.npc.desktop.com.npc.desktop.entities
                 .WithMany(a => a.regions)
                 .HasForeignKey(a => a.areaId);
 
-            modelBuilder.Entity<Plant>()
+
+            modelBuilder.Entity<Cooperative>()
                 .HasRequired<Regions>(r => r.region)
-                .WithMany(r => r.plants)
+                .WithMany(r => r.cooperatives)
                 .HasForeignKey(r => r.regionId);
+
+            modelBuilder.Entity<Plant>()
+                .HasRequired<Cooperative>(c => c.cooperative)
+                .WithMany(c => c.plants)
+                .HasForeignKey(c => c.cooperativeId);
 
             modelBuilder.Entity<DataValues>()
                 .HasRequired<DataType>(dt => dt.dataType)
@@ -44,6 +49,12 @@ namespace com.npc.desktop.com.npc.desktop.entities
                 .WithMany(p => p.dataValues)
                 .HasForeignKey(p => p.plantId);
 
+            modelBuilder.Entity<DataValues>()
+                .HasRequired<DataCategory>(dc => dc.dataCategory)
+                .WithMany(dc => dc.dataValues)
+                .HasForeignKey(dc => dc.dataCategoryId);
+
+
             Console.WriteLine("Created Entities");
         }
 
@@ -52,5 +63,6 @@ namespace com.npc.desktop.com.npc.desktop.entities
         public DbSet<DataValues> dataValues { get; set; }
         public DbSet<Plant> plants { get; set; }
         public DbSet<Regions> regions { get; set; }
+        public DbSet<Cooperative> cooperatives { get; set; }
     }
 }

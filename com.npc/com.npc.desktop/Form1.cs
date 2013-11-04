@@ -38,7 +38,7 @@ namespace com.npc.desktop
                 AreaSessionData areaSessionData = new AreaSessionData();
                 areaSessionData.getLuzonArea().regions.Add(region);
                 //dataGridView1.DataSource = areaSessionData.getAllRegionsByArea("luzons");
-                dataGridView1.DataSource = new RegionSessionData().getAllPlantsInRegion1();
+                //dataGridView1.DataSource = new RegionSessionData().getAllPlantsInRegion1();
 
                 //dataGridView1.DataSource = new RegionSessionData().getAllRegionsInLuzon();
             }

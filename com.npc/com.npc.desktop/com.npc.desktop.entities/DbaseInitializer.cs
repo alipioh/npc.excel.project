@@ -6,8 +6,8 @@ using System.Text;
 
 namespace com.npc.desktop.com.npc.desktop.entities
 {
-    //DropCreateDatabasesIModelChanges, DropCreateDatabaseAlways
-    class DbaseInitializer : DropCreateDatabaseAlways<Dbase>
+    //DropCreateDatabaseIfModelChanges, DropCreateDatabaseAlways
+    class DbaseInitializer : DropCreateDatabaseIfModelChanges<Dbase>
     {
         protected override void Seed(Dbase context){
             IList<Area> areas = new List<Area>();

@@ -25,17 +25,13 @@ namespace com.npc.desktop.com.npc.desktop.entities
         public Int32 plantId { get; set; }
         
         public String name { get; set; }
-        
-        public String description { get; set; }
-        
-        public String prefix { get; set; }
         #endregion
 
         #region FOREIGN KEY FOR REGION
-        public Int32 regionId { get; set; }
+        public Int32 cooperativeId { get; set; }
         
-        [ForeignKey("regionId")]
-        public virtual Regions region { get; set; }
+        [ForeignKey("cooperativeId")]
+        public virtual Cooperative cooperative { get; set; }
         #endregion
 
         #region COLLECTIONS
