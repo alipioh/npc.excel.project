@@ -70,6 +70,25 @@ namespace com.npc.desktop
 
                             Console.WriteLine("Region NULL");
                         }
+                        else
+                        {
+                            coop = new Cooperative();
+                            coop.name = coopName;
+                            coop.region = region;
+
+                            plant = new Plant();
+                            plant.name = plantName;
+                            plant.cooperative = coop;
+
+                            dataValue.plant = plant;
+                        }
+                    }
+                    else {
+                        plant = new Plant();
+                        plant.name = plantName;
+                        plant.cooperative = coop;
+
+                        dataValue.plant = plant;
                     }
                 }
                 else
@@ -95,7 +114,13 @@ namespace com.npc.desktop
                 dataValue.d2021 = Double.Parse("0" + dr[22].ToString());
                 dataValue.d2022 = Double.Parse("0" + dr[23].ToString());
 
-                dataValuesSessionData.add(dataValue);
+                using (var db = new Dbase())
+                {
+                    db.dataValues.Add(dataValue);
+                    db.SaveChanges();
+
+                }
+                //dataValuesSessionData.add(dataValue);
             }        
         }
 
