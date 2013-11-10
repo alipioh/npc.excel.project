@@ -15,6 +15,12 @@ namespace com.npc.desktop.entities
         /// <param name="region"></param>
         /// <returns></returns>
 
+        public Regions getRegionByArea(Int32 areaId) {
+            return Dbase.getCurrentInstance().regions
+                    .Where(r => r.area.areaId == areaId)
+                    .FirstOrDefault<Regions>();
+        }
+
         public Regions getRegionByName(String regionName)
         {
             return Dbase.getCurrentInstance().regions

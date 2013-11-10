@@ -22,13 +22,12 @@ namespace com.npc.desktop.entities
             {
                 using (var data = new Dbase())
                 {
-                    data.Configuration.LazyLoadingEnabled = false;
+                    data.Configuration.LazyLoadingEnabled = true;
 
                     IList<Area> areas = data.areas.Include(s => s.regions)
                         .Where(a => a.name == area)
                         .ToList<Area>();
 
-                    
                     return areas;
                 }
             }
@@ -41,7 +40,9 @@ namespace com.npc.desktop.entities
 
         public IList<Area> getAllAreas()
         {
-            return Dbase.getCurrentInstance().areas.ToList<Area>();
+            return Dbase.getCurrentInstance().areas
+                    .Include(a => a.regions)   
+                    .ToList<Area>();
         }
 
         public Area getAreaByName(String areaName)

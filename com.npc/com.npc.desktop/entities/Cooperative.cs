@@ -11,10 +11,26 @@ namespace com.npc.desktop.entities
     [Table("npcCooperative")]
     class Cooperative
     {
+        #region Constructor
         public Cooperative() {
             plants = new List<Plant>();
         }
-        
+
+        private Cooperative(String coopName, String accronym) : this()
+        {
+            name = coopName;
+            this.accronym = accronym;
+        }
+
+        public Cooperative(String coopName, String accronym, Int32 regionId) : this(coopName, accronym) {
+            this.regionId = regionId;
+        }
+
+        public Cooperative(String coopName, String accronym, Regions region) : this(coopName, accronym) {
+            this.region = region;
+        }
+        #endregion
+
         #region ENCAPSULATION METHODS OR ACCESSOR & MUTATOR METHODS
         [Key]
         public Int32 cooperativeId { get; set; }

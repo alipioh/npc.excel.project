@@ -37,10 +37,22 @@ namespace com.npc.desktop.entities
 
         #endregion
 
+        #region Constructors
         public Regions()
         {
             cooperatives = new List<Cooperative>();
         }
+
+        public Regions(String regionName, Int32 areaId) : this() {
+            name = regionName;
+            this.areaId = areaId;
+        }
+
+        public Regions(String regionName, Area area) : this() { 
+            name=regionName;
+            this.area = area;
+        }
+        #endregion
 
         #region ENCAPSULATION METHODS / ACCESSOR & MUTATOR METHODS
         [Key]

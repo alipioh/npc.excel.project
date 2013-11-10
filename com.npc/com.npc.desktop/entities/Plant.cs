@@ -16,9 +16,21 @@ namespace com.npc.desktop.entities
     [Table("npcPlant")]
     class Plant
     {
+        #region Constructors
         public Plant() {
             dataValues = new List<DataValues>();
         }
+
+        public Plant(String plantName, Int32 cooperativeId) : this() {
+            name = plantName;
+            this.cooperativeId = cooperativeId;
+        }
+
+        public Plant(String plantName, Cooperative cooperative) : this() {
+            name = plantName;
+            this.cooperative = cooperative;
+        }
+        #endregion
 
         #region ENCAPSULATION METHODS OR ACCESSOR & MUTATOR METHODS
         [Key]
