@@ -21,6 +21,7 @@ namespace com.npc.desktop.entities
         #region ENCAPSULATION METHOD / ACCESSOR & MUTATOR METHODS
         [Key]
         public Int32 dataValuesId { get; set; }
+       
         public Double d2008 { get; set; }
         public Double d2009 { get; set; }
         public Double d2010 { get; set; }
@@ -36,6 +37,7 @@ namespace com.npc.desktop.entities
         public Double d2020 { get; set; }
         public Double d2021 { get; set; }
         public Double d2022 { get; set; }
+       
         #endregion
 
         #region FOREIGN KEY FOR DATATYPE

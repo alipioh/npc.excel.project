@@ -19,3 +19,4 @@ C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debu
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\bin\Debug\EntityFramework.xml
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.exe
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csprojResolveAssemblyReference.cache
+C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.frmMain.resources

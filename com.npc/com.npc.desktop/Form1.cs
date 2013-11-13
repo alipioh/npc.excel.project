@@ -73,34 +73,6 @@ namespace com.npc.desktop
                 }
                 else
                 {
-
-                    //Plant plantTemp = plantDataSession.getPlantByCoop(coopName);
-                    //if (plantTemp == null)
-                    //{
-                    //    Cooperative coop = null;
-                    //    if (region == null)
-                    //    {
-                    //        Area area = areaSessionData.getAreaByName(areaName);
-                    //        Regions regionNew = new Regions(regionName, area.areaId);
-                    //        coop = new Cooperative(coopName, coopAccrnym, regionNew);
-                    //    }
-                    //    else {
-                    //        coop = new Cooperative(coopName, coopAccrnym, region.regionId);
-                    //    }
-                        
-                    //    var db = Dbase.getCurrentInstance();
-                    //    db.cooperatives.Add(coop);
-                    //    db.SaveChanges();
-
-                    //    Plant plantNew = new Plant(plantName, coop.cooperativeId);
-                    //    db.plants.Add(plantNew);
-                    //    db.SaveChanges();
-
-                    //    dataValue.plantId = plantNew.plantId;
-                    //}
-                    //else {
-                    //    dataValue.plantId = plantTemp.plantId;
-                    //}
                     Plant plantTemp = plantDataSession.getPlantByPlantNCoop(plantName, coopName);
                     if (plantTemp == null)
                     {
@@ -135,27 +107,28 @@ namespace com.npc.desktop
 
                 dataValue.dataTypeId = dataTypeSessionData.getDataTypeByName(dr[8].ToString()).dataTypeId;
                 dataValue.dataCategoryId = dataCategorySessionData.getDataCategoryByName("psa").dataCategoryId;
-                dataValue.d2008 = Double.Parse("0" + dr[9].ToString());
-                dataValue.d2009 = Double.Parse("0" + dr[10].ToString());
-                dataValue.d2010 = Double.Parse("0" + dr[11].ToString());
-                dataValue.d2011 = Double.Parse("0" + dr[12].ToString());
-                dataValue.d2012 = Double.Parse("0" + dr[13].ToString());
-                dataValue.d2013 = Double.Parse("0" + dr[14].ToString());
-                dataValue.d2014 = Double.Parse("0" + dr[15].ToString());
-                dataValue.d2015 = Double.Parse("0" + dr[16].ToString());
-                dataValue.d2016 = Double.Parse("0" + dr[17].ToString());
-                dataValue.d2017 = Double.Parse("0" + dr[18].ToString());
-                dataValue.d2018 = Double.Parse("0" + dr[19].ToString());
-                dataValue.d2019 = Double.Parse("0" + dr[20].ToString());
-                dataValue.d2020 = Double.Parse("0" + dr[21].ToString());
-                dataValue.d2021 = Double.Parse("0" + dr[22].ToString());
-                dataValue.d2022 = Double.Parse("0" + dr[23].ToString());
-
-                using (var db = new Dbase())
-                {
-                    db.dataValues.Add(dataValue);
-                    db.SaveChanges();
-                }
+                
+                    dataValue.d2008 = Double.Parse("0" + dr[9].ToString());
+                    dataValue.d2009 = Double.Parse("0" + dr[10].ToString());
+                    dataValue.d2010 = Double.Parse("0" + dr[11].ToString());
+                    dataValue.d2011 = Double.Parse("0" + dr[12].ToString());
+                    dataValue.d2012 = Double.Parse("0" + dr[13].ToString());
+                    dataValue.d2013 = Double.Parse("0" + dr[14].ToString());
+                    dataValue.d2014 = Double.Parse("0" + dr[15].ToString());
+                    dataValue.d2015 = Double.Parse("0" + dr[16].ToString());
+                    dataValue.d2016 = Double.Parse("0" + dr[17].ToString());
+                    dataValue.d2017 = Double.Parse("0" + dr[18].ToString());
+                    dataValue.d2018 = Double.Parse("0" + dr[19].ToString());
+                    dataValue.d2019 = Double.Parse("0" + dr[20].ToString());
+                    dataValue.d2020 = Double.Parse("0" + dr[21].ToString());
+                    dataValue.d2021 = Double.Parse("0" + dr[22].ToString());
+                    dataValue.d2022 = Double.Parse("0" + dr[23].ToString());
+                    
+                    using (var db = new Dbase())
+                    {
+                        db.dataValues.Add(dataValue);
+                        db.SaveChanges();
+                    }
             }
 
             Console.WriteLine("DONE!");
@@ -247,9 +220,18 @@ namespace com.npc.desktop
             //    currentRow += 2;
             //}
 
+            excel.WriteCell(1, 1, @"='E:\ECs (108)\1.  LUZON (50)\2013 DDP REGION 5 (11)\2013 ALECO DDP\[2013_aleco_ddp.xlsm]DDP-Demand'!$F$130");
+
             excel.Save("test.xlsx");
             excel.Close();
             Console.WriteLine("Success!");
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            frmMain mainForm = new frmMain();
+            mainForm.Show();
 
         }
     }
