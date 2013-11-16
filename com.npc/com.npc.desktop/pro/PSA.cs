@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,12 +11,33 @@ namespace com.npc.desktop.pro
     {
         private String file = "Summary of PSC";
         private String workSheet = "PSC_ECs";
+        
+        private String areaColumn;
+        private String regionColumn;
+        private String cooperativeColumn;
+        private String coopAccronymColumn;
+        private String plantColumn;
+
+        private Int32 startRowIndex;
+        private Int32 endRowIndex;
+
+        private String startColumnIndex;
+        private String endColumnIndex;
+
+
         private List<Kwh> kwhData;
         private List<Mwh> mwhData;
         public PSA() {
             kwhData = new List<Kwh>();
             mwhData = new List<Mwh>();
+            kwhData.Capacity = 15;
 
+            Area_Column = "A";
+            Region_Column = "B";
+            Plant_Column = "C";
+            Cooperative_Column = "D";
+            Cooperative_Accronym_Column = "E";
+          
             kwhData.Add(new Kwh() { Name="2008", Column="J"});
             kwhData.Add(new Kwh() { Name = "2009", Column = "K" });
             kwhData.Add(new Kwh() { Name = "2010", Column="L"});
@@ -49,6 +71,31 @@ namespace com.npc.desktop.pro
             mwhData.Add(new Mwh() { Name = "2022", Column = "X" });
         }
 
+        [CategoryAttribute("Reading Settings")]
+        public Int32 StartRowIndex {
+            get { return startRowIndex; }
+            set { startRowIndex = value; }
+        }
+
+        [CategoryAttribute("Reading Settings")]
+        public Int32 EndRowIndex {
+            get { return endRowIndex; }
+            set { endRowIndex = value; }
+        }
+        
+        [CategoryAttribute("Reading Settings")]
+        public String StartColumnIndex
+        {
+            get { return startColumnIndex; }
+            set { startColumnIndex = value;  }
+        }
+
+        [CategoryAttribute("Reading Settings")]
+        public String EndColumnIndex {
+            get { return endColumnIndex; }
+            set { endColumnIndex = value; }
+        }
+
 
         [CategoryAttribute("Document Settings"),
         ReadOnly(true),
@@ -74,6 +121,34 @@ namespace com.npc.desktop.pro
         public List<Mwh> Mwh_Data{
             get {return mwhData;}
             set {mwhData = value;}
+        }
+
+     
+        public String Area_Column {
+            get { return areaColumn; }
+            set { areaColumn = value; }
+        }
+
+        public String Region_Column {
+            get { return regionColumn; }
+            set { regionColumn = value; }
+        }
+
+        public String Cooperative_Column {
+            get { return cooperativeColumn; }
+            set { cooperativeColumn = value; }
+        }
+
+        public String Cooperative_Accronym_Column
+        {
+            get { return coopAccronymColumn; }
+            set { coopAccronymColumn = value; }
+        }
+
+
+        public String Plant_Column {
+            get { return plantColumn; }
+            set { plantColumn = value; }
         }
     }
 }

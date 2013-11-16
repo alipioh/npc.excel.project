@@ -21,11 +21,18 @@ namespace com.npc.desktop.entities
                     .FirstOrDefault<Regions>();
         }
 
+        public Regions getRegionByName(Regions region){
+            return Dbase.getCurrentInstance().regions
+                        .Where(r => r.name == region.name)
+                        .FirstOrDefault<Regions>();
+        }
+
         public Regions getRegionByName(String regionName)
         {
-            return Dbase.getCurrentInstance().regions
-                    .Where(r => r.name == regionName)
-                    .FirstOrDefault<Regions>();
+            Regions region = new Regions();
+            region.name = regionName;
+
+            return getRegionByName(region);
         }
 
         public Regions getRegion1()

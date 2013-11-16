@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using com.npc.desktop.entities;
+using com.npc.desktop.pro;
 using com.npc.desktop.utils;
 using db = System.Data.OleDb;
 
@@ -35,8 +36,10 @@ namespace com.npc.desktop
 
             search(fileName);
 
-            
+            Int32 row = 0;
+                    
             foreach(DataRow dr in ds.Tables["tbl"].Rows){
+                ++row;
                 DataValues dataValue = new DataValues();
 
                 String plantName = dr[4].ToString();
@@ -107,23 +110,48 @@ namespace com.npc.desktop
 
                 dataValue.dataTypeId = dataTypeSessionData.getDataTypeByName(dr[8].ToString()).dataTypeId;
                 dataValue.dataCategoryId = dataCategorySessionData.getDataCategoryByName("psa").dataCategoryId;
+
+                using (var db = new Dbase())
+                {
+                    db.dataValues.Add(dataValue);
+                    db.SaveChanges();
+
+                    PSA psa = new PSA();
+                    ExcelUtil exc = new ExcelUtil();
+                    exc.Open(fileName);
+                    exc.Worksheet("PSC_ECs");
+
+                    foreach (Kwh kwh in psa.Kwh_Data)
+                    {
+                        DataContent content = new DataContent();
+                        content.header = kwh.Name;
+                        //content.value = dr[Int32.Parse(kwh.Name) - 1999].ToString();
+                        content.value = exc.ReadCell(kwh.Column + row);
+                        Console.WriteLine(row + " = " + content.value);
+                        content.dataValuesId = dataValue.dataValuesId;
+                        db.dataContents.Add(content);
+                        db.SaveChanges();
+                    }
+                }
                 
-                    dataValue.d2008 = Double.Parse("0" + dr[9].ToString());
-                    dataValue.d2009 = Double.Parse("0" + dr[10].ToString());
-                    dataValue.d2010 = Double.Parse("0" + dr[11].ToString());
-                    dataValue.d2011 = Double.Parse("0" + dr[12].ToString());
-                    dataValue.d2012 = Double.Parse("0" + dr[13].ToString());
-                    dataValue.d2013 = Double.Parse("0" + dr[14].ToString());
-                    dataValue.d2014 = Double.Parse("0" + dr[15].ToString());
-                    dataValue.d2015 = Double.Parse("0" + dr[16].ToString());
-                    dataValue.d2016 = Double.Parse("0" + dr[17].ToString());
-                    dataValue.d2017 = Double.Parse("0" + dr[18].ToString());
-                    dataValue.d2018 = Double.Parse("0" + dr[19].ToString());
-                    dataValue.d2019 = Double.Parse("0" + dr[20].ToString());
-                    dataValue.d2020 = Double.Parse("0" + dr[21].ToString());
-                    dataValue.d2021 = Double.Parse("0" + dr[22].ToString());
-                    dataValue.d2022 = Double.Parse("0" + dr[23].ToString());
-                    
+                    /*
+                        dataValue.d2008 = Double.Parse("0" + dr[9].ToString());
+                        dataValue.d2009 = Double.Parse("0" + dr[10].ToString());
+                        dataValue.d2010 = Double.Parse("0" + dr[11].ToString());
+                        dataValue.d2011 = Double.Parse("0" + dr[12].ToString());
+                        dataValue.d2012 = Double.Parse("0" + dr[13].ToString());
+                        dataValue.d2013 = Double.Parse("0" + dr[14].ToString());
+                        dataValue.d2014 = Double.Parse("0" + dr[15].ToString());
+                        dataValue.d2015 = Double.Parse("0" + dr[16].ToString());
+                        dataValue.d2016 = Double.Parse("0" + dr[17].ToString());
+                        dataValue.d2017 = Double.Parse("0" + dr[18].ToString());
+                        dataValue.d2018 = Double.Parse("0" + dr[19].ToString());
+                        dataValue.d2019 = Double.Parse("0" + dr[20].ToString());
+                        dataValue.d2020 = Double.Parse("0" + dr[21].ToString());
+                        dataValue.d2021 = Double.Parse("0" + dr[22].ToString());
+                        dataValue.d2022 = Double.Parse("0" + dr[23].ToString());
+                    */
+
                     using (var db = new Dbase())
                     {
                         db.dataValues.Add(dataValue);
@@ -154,7 +182,7 @@ namespace com.npc.desktop
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ExcelUtil excel = new ExcelUtil("Sheet1");
+            ExcelUtil excel = new ExcelUtil();
                
             //foreach(Area areas in areaSessionData.getAllRegionsByArea(Area.LUZON)){
             //    foreach (Regions region in areas.regions) {
@@ -233,6 +261,34 @@ namespace com.npc.desktop
             frmMain mainForm = new frmMain();
             mainForm.Show();
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            String fileName = openFileDialog1.FileName;
+            ExcelUtil exc = new ExcelUtil();
+            exc.Open(fileName);
+            exc.Worksheet("PSC_ECs");
+
+
+            Object[,] obj = exc.ReadCellByRange("A1:Y806");
+            Console.WriteLine(obj.GetUpperBound(0));
+            Console.WriteLine(obj.GetUpperBound(1));
+
+            NumberToLetterUtil numUtil = new NumberToLetterUtil();
+
+            for (int x = 1; x < obj.GetUpperBound(0); x++)
+            {
+                for (int y = 1; y < obj.GetUpperBound(1); y++)
+                {
+                    Console.WriteLine(numUtil.getLetterByNumber(y) + x + " = " + obj[x, y]);
+                }
+            }
+
+            //for (int cntr = 5; cntr < 500; cntr++) {
+            //    Console.WriteLine(exc.ReadCell("A" + cntr.ToString()));
+            //}
         }
     }
 }

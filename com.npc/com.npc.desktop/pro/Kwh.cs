@@ -23,7 +23,7 @@ namespace com.npc.desktop.pro
             set { column = value; }
         }
 
-        [ReadOnly(true)]
+       
         public String Keyword {
             get { return keyWord; }
             set { keyWord = value; }

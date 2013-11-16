@@ -7,6 +7,46 @@ namespace com.npc.desktop.entities
 {
     abstract class BaseSession
     {
+        private AreaSessionData areaSessionData;
+        private CooperativeSessionData cooperativeSessionData;
+        private PlantDataSession plantSessionData;
+        private RegionSessionData regionSessionData;
+
+        public void createIfNotExist(Object obj) {
+            if (!isExist(obj)) {
+                add(obj);
+            }
+        }
+
+        public void deleteIfExist(Object obj) {
+            if (isExist(obj)) {
+                delete(obj);
+            }
+        }
+
+        public Boolean isExist(Object obj) {
+            bool exist = false;
+
+            if (obj.GetType() == typeof(Area)) {
+                Area area = areaSessionData.getAreaByName((Area)obj);
+                exist = (area != null) ? true : false;
+            }
+            else if (obj.GetType() == typeof(Cooperative)) {
+                Cooperative coop = cooperativeSessionData.getCooperativeByName((Cooperative)obj);
+                exist = (coop != null) ? true : false;
+            }
+            else if (obj.GetType() == typeof(Plant)) {
+                Plant plant = plantSessionData.getPlantByName((Plant)obj);
+                exist = (plant != null) ? true : false;
+            }
+            else if (obj.GetType() == typeof(Regions)) {
+                Regions region = regionSessionData.getRegionByName((Regions)obj);
+                exist = (region != null) ? true : false;
+            }
+
+            return exist;
+        }
+
         public void add(Object obj)
         {
             using (var db = new Dbase())

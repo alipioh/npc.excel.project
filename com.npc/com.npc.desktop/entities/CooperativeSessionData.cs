@@ -17,9 +17,15 @@ namespace com.npc.desktop.entities
         }
 
         public Cooperative getCooperativeByName(String cooperativeName) {
+            Cooperative coop = new Cooperative();
+            coop.name = cooperativeName;
+            return getCooperativeByName(coop);
+        }
+
+        public Cooperative getCooperativeByName(Cooperative coop) {
             return Dbase.getCurrentInstance().cooperatives
-                    .Where(c => c.name == cooperativeName)
-                    .FirstOrDefault<Cooperative>();
+                        .Where(c => c.name == coop.name)
+                        .FirstOrDefault<Cooperative>();
         }
 
         public IList<Plant> getAllPlantsByCoopName(String cooperativeName)

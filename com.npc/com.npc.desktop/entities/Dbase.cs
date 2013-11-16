@@ -53,6 +53,10 @@ namespace com.npc.desktop.entities
                 .WithMany(dc => dc.dataValues)
                 .HasForeignKey(dc => dc.dataCategoryId);
 
+            modelBuilder.Entity<DataContent>()
+                .HasRequired<DataValues>(dv => dv.dataValues)
+                .WithMany(dv => dv.contents)
+                .HasForeignKey(dv => dv.dataValuesId);
 
             Console.WriteLine("Created Entities");
         }
@@ -60,10 +64,12 @@ namespace com.npc.desktop.entities
         public DbSet<Area> areas { get; set; }
         public DbSet<DataType> dataTypes { get; set; }
         public DbSet<DataValues> dataValues { get; set; }
+
+        public DbSet<DataContent> dataContents { get; set; }
+
         public DbSet<Plant> plants { get; set; }
         public DbSet<Regions> regions { get; set; }
         public DbSet<Cooperative> cooperatives { get; set; }
         public DbSet<DataCategory> dataCategories { get; set; }
-
     }
 }

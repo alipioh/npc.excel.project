@@ -47,9 +47,16 @@ namespace com.npc.desktop.entities
 
         public Area getAreaByName(String areaName)
         {
+            Area area = new Area();
+            area.name = areaName;
+
+            return getAreaByName(area);
+        }
+
+        public Area getAreaByName(Area area) {
             return Dbase.getCurrentInstance().areas
-                    .Where(a => a.name == areaName)
-                    .FirstOrDefault<Area>();
+                        .Where(a => a.name == area.name)
+                        .FirstOrDefault<Area>();
         }
 
         public Area getLuzonArea()

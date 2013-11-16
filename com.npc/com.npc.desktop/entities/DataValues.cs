@@ -4,6 +4,7 @@
  *  Date Created: November 1, 2013 
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,12 +17,15 @@ namespace com.npc.desktop.entities
     [Table("npcDataValues")]
     class DataValues 
     {
-        public DataValues() { }
+        public DataValues() {
+            contents = new List<DataContent>();
+        }
 
         #region ENCAPSULATION METHOD / ACCESSOR & MUTATOR METHODS
         [Key]
         public Int32 dataValuesId { get; set; }
        
+        /*
         public Double d2008 { get; set; }
         public Double d2009 { get; set; }
         public Double d2010 { get; set; }
@@ -37,7 +41,7 @@ namespace com.npc.desktop.entities
         public Double d2020 { get; set; }
         public Double d2021 { get; set; }
         public Double d2022 { get; set; }
-       
+       */
         #endregion
 
         #region FOREIGN KEY FOR DATATYPE
@@ -61,5 +65,8 @@ namespace com.npc.desktop.entities
         public virtual DataCategory dataCategory { get; set; }
         #endregion
 
+        #region COLLECTIONS
+        public ICollection<DataContent> contents {get;set;}
+        #endregion
     }
 }

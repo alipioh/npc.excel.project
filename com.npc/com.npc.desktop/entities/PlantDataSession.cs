@@ -11,8 +11,15 @@ namespace com.npc.desktop.entities
     class PlantDataSession : BaseSession
     {
         public Plant getPlantByName(String plantName){
+            Plant plant = new Plant();
+            plant.name = plantName;
+
+            return getPlantByName(plant);
+        }
+
+        public Plant getPlantByName(Plant plant) {
             return Dbase.getCurrentInstance()
-                .plants.Where(p => p.name == plantName)
+                .plants.Where(p => p.name == plant.name)
                 .FirstOrDefault<Plant>();
         }
 
