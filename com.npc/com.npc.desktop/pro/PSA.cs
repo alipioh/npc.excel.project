@@ -7,7 +7,7 @@ using System.Text;
 
 namespace com.npc.desktop.pro
 {
-    class PSA
+    class PSA : IReaderSettings
     {
         private String file = "Summary of PSC";
         private String workSheet = "PSC_ECs";

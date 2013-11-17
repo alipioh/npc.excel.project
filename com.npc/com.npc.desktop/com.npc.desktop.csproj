@@ -75,6 +75,7 @@
     <Compile Include="entities\DataCategory.cs" />
     <Compile Include="entities\DataCategorySessionData.cs" />
     <Compile Include="entities\DataContent.cs" />
+    <Compile Include="entities\DataContentSessionData.cs" />
     <Compile Include="entities\DataType.cs" />
     <Compile Include="entities\DataTypeSessionData.cs" />
     <Compile Include="entities\DataValues.cs" />
@@ -97,12 +98,18 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="interfaces\IReaderSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pro\Demand.cs" />
     <Compile Include="pro\Excel.cs" />
     <Compile Include="pro\Kwh.cs" />
     <Compile Include="pro\Mwh.cs" />
     <Compile Include="pro\PSA.cs" />
+    <Compile Include="pro\RowSequenceCollection.cs" />
+    <Compile Include="pro\RowSequenceRange.cs" />
+    <Compile Include="pro\TotalElectricityPurchased.cs" />
+    <Compile Include="pro\TotalPeakDemand.cs" />
     <Compile Include="utils\ExcelUtil.cs" />
     <Compile Include="utils\NumberToLetterUtil.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -156,6 +163,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="converter\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

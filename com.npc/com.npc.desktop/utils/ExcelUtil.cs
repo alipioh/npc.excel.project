@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -28,7 +30,7 @@ namespace com.npc.desktop.utils
             workSheet.Cells[row, column] = value;
         }
 
-        public Object ReadCell(Int32 row, String column){
+        public String ReadCell(Int32 row, String column){
             return ReadCell(column + row.ToString());
         }
 
@@ -52,11 +54,12 @@ namespace com.npc.desktop.utils
         }
 
         public void AddWorksheet(String sheetName) {
-            this.workSheet = workBook.Sheets[SheetName];
+            workBook.Sheets.Add(sheetName);
         }
 
         public void Open(String path) {
-            workBook =  application.Workbooks.Open(path);    
+            Path = path;
+            workBook =  application.Workbooks.Open(Path);    
         }
 
         public void Worksheet(String workSheet)
@@ -71,9 +74,10 @@ namespace com.npc.desktop.utils
         public void Save(String fileName) {
             try
             {
-                if (fileName != null)
+                if (fileName != null) {
                     Path = fileName;
-
+                }
+                 
                 workSheet.SaveAs(Path);
                 Close();
             }
@@ -84,12 +88,20 @@ namespace com.npc.desktop.utils
         }
 
         public void Close() {
-            workBook.Close();
-            application.Quit();
+            try
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                workBook.Close(false, Missing.Value, Missing.Value);
 
-            ReleaseObject(application); 
-            ReleaseObject(workBook);
-            ReleaseObject(workSheet);
+                ReleaseObject(application);
+                ReleaseObject(workBook);
+                ReleaseObject(workSheet);
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.StackTrace);
+            }
+            
         }
 
         private void ReleaseObject(Object obj) {

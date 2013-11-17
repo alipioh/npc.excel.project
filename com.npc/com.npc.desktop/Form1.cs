@@ -197,21 +197,21 @@ namespace com.npc.desktop
             //}
 
 
-            int rows = 1;
-            int currentRow = 1;
+            //int rows = 1;
+            //int currentRow = 1;
 
-            foreach (Area area in areaSessionData.getAllAreas()) {
-                Console.WriteLine(area.name);
-                foreach (Regions region in area.regions) {
-                    Console.WriteLine(" +" + region.name);
-                    foreach (Cooperative coop in cooperativeDataSession.getCooperativeByRegion(region.regionId)) {
-                        Console.WriteLine("  +" + coop.name);
-                        foreach (Plant plant in plantDataSession.getAllPlantByCoop(coop.cooperativeId)) {
-                            Console.WriteLine("   +" + plant.name);
-                        }
-                    }
-                }
-            }
+            //foreach (Area area in areaSessionData.getAllAreas()) {
+            //    Console.WriteLine(area.name);
+            //    foreach (Regions region in area.regions) {
+            //        Console.WriteLine(" +" + region.name);
+            //        foreach (Cooperative coop in cooperativeDataSession.getCooperativeByRegion(region.regionId)) {
+            //            Console.WriteLine("  +" + coop.name);
+            //            foreach (Plant plant in plantDataSession.getAllPlantByCoop(coop.cooperativeId)) {
+            //                Console.WriteLine("   +" + plant.name);
+            //            }
+            //        }
+            //    }
+            //}
 
            
             //foreach(Plant data in plantDataSession.getAllPlantData()){
@@ -248,9 +248,18 @@ namespace com.npc.desktop
             //    currentRow += 2;
             //}
 
+            //excel.AddWorkbook();
+           
+            //excel.Worksheet("Sheet1");
+            //excel.AddWorksheet("Sheet1");
+            
+            excel.AddWorkbook();
+            excel.Worksheet("Sheet1");
+            
             excel.WriteCell(1, 1, @"='E:\ECs (108)\1.  LUZON (50)\2013 DDP REGION 5 (11)\2013 ALECO DDP\[2013_aleco_ddp.xlsm]DDP-Demand'!$F$130");
 
-            excel.Save("test.xlsx");
+            Console.WriteLine(excel.ReadCell(1, "A"));
+            //excel.Save("test2.xlsx");
             excel.Close();
             Console.WriteLine("Success!");
 
@@ -260,7 +269,6 @@ namespace com.npc.desktop
         {
             frmMain mainForm = new frmMain();
             mainForm.Show();
-
         }
 
         private void button4_Click(object sender, EventArgs e)
