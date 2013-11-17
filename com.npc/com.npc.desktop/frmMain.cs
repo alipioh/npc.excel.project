@@ -5,9 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using com.npc.desktop.entities;
+using com.npc.desktop.enums;
+using com.npc.desktop.exceptions;
 using com.npc.desktop.pro;
 using com.npc.desktop.utils;
 
@@ -65,42 +68,59 @@ namespace com.npc.desktop
             NumberToLetterUtil converter = new NumberToLetterUtil();
 
             ExcelUtil excel = new ExcelUtil();
-            excel.AddWorkbook();
-            excel.Worksheet("Sheet1");
-
             
-            int start1 = demand.StartRow1Index;
-            int end1 = demand.EndRow1Index;
-
-            int start2 = Int32.Parse(converter.getNumberByLetter(demand.StartColumn1Index));
-            int end2 = Int32.Parse(converter.getNumberByLetter(demand.EndColumn1Index));
-
             DataContent dataContent = new DataContent();
             DataValues dataValue = new DataValues();
             DataCategory dataCategory = new DataCategory();
             
+            NumberToLetterUtil numUtil = new NumberToLetterUtil();
 
-            for (int cntr = start1; cntr <= end1; cntr++) {
-                //for(int cntr2= start2; cntr2 <=end2; cntr2++){
-
-                //    String cell = converter.getLetterByNumber(cntr2) + cntr;
-                //    String path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
-                //    excel.WriteCell(1, 1, path);
-                //    Console.WriteLine(excel.ReadCell(1, "A"));
-                
-                //}
-
-                foreach (TotalElectricityPurchased electricity in demand.ElectricityPurchase)
+            if (demand.RowSequenceType == RowSequenceType.Range) {
+                try
                 {
-                    String cell = electricity.Column + cntr;
-                    String path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
-                    excel.WriteCell(1, 1, path);
-                    Console.WriteLine(electricity.Name + " - " + excel.ReadCell(1, "A"));
+                    excel.Open(demand.Path + "/" + demand.FileName);
+                    excel.Worksheet(demand.WorkSheet);
+
+                    Object[,] obj = excel.ReadCellByRange(demand.RowRangeFrom + ":" + demand.RowRangeTo);
+                    for (int outer = 1; outer <= obj.GetUpperBound(0); outer++)
+                    {
+                        for (int inner = 1; inner <= obj.GetUpperBound(1); inner++)
+                        {
+                            Console.WriteLine(numUtil.getLetterByNumber(inner) + outer + " = " + obj[outer, inner]);
+                        }
+                    }
+                }
+                catch (WorksheetNotFoundException wnfe)
+                {
+                    MessageBox.Show(null, wnfe.Message, "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (RangeInvalidException rie) {
+                    MessageBox.Show(null, rie.Message, "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+            }
+            else if (demand.RowSequenceType == RowSequenceType.Collection) {
+                try {
+                    excel.AddWorkbook();
+                    excel.Worksheet("Sheet1");
+
+                    foreach (String cntr in demand.RowCollection)
+                    {
+                        foreach (TotalElectricityPurchased electricity in demand.ElectricityPurchase)
+                        {
+                            String cell = electricity.Column + cntr;
+                            String path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
+                            excel.WriteCell(1, 1, path);
+                            Console.WriteLine(electricity.Name + " - " + excel.ReadCell(1, "A"));
+                        }
+                    }
+                }
+                catch (NullReferenceException nre)
+                {
+                    MessageBox.Show(null,"Collection of row sequence is null", "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            
-            
-            //excel.Save("test2.xlsx");
+
             excel.Close();
             Console.WriteLine("Success!");
             Console.WriteLine(demand.Region);
@@ -112,7 +132,8 @@ namespace com.npc.desktop
             {
                 txtDemand.Text = openFileDialog1.FileName;
                 String path = Path.GetDirectoryName(txtDemand.Text);
-                Demand demand = new Demand();
+                Demand demand = (Demand)propertyGrid.SelectedObject;
+
                 demand.FileName = openFileDialog1.SafeFileName;
                 demand.Path = path;
                 propertyGrid.SelectedObject = demand;

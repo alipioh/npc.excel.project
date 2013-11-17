@@ -277,7 +277,8 @@ namespace com.npc.desktop
             String fileName = openFileDialog1.FileName;
             ExcelUtil exc = new ExcelUtil();
             exc.Open(fileName);
-            exc.Worksheet("PSC_ECs");
+            //exc.AddWorkbook();
+            exc.Worksheet("Sheet1");
 
 
             Object[,] obj = exc.ReadCellByRange("A1:Y806");

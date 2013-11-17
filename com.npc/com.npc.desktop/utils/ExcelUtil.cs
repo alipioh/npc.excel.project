@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using com.npc.desktop.exceptions;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace com.npc.desktop.utils
@@ -39,8 +40,14 @@ namespace com.npc.desktop.utils
         }
 
         public Object[,] ReadCellByRange(String range) {
-            Object[,] values = application.Range[range].Value;
-            return values;
+            try
+            {
+                Object[,] values = application.Range[range].Value;
+                return values;
+            }
+            catch (Exception ex) {
+                throw new RangeInvalidException("Invalid Row Range.");
+            }
         }
         #endregion
 
@@ -64,7 +71,13 @@ namespace com.npc.desktop.utils
 
         public void Worksheet(String workSheet)
         {
-            this.workSheet = workBook.Worksheets[workSheet];
+            try
+            {
+                this.workSheet = workBook.Worksheets[workSheet];
+            }
+            catch (Exception ex) {
+                throw new WorksheetNotFoundException("Worksheet Invalid");
+            }            
         }
 
         public void Save() {
