@@ -13,7 +13,7 @@ namespace com.npc.desktop.entities
     {
         public DataCategory()
         {
-            dataValues = new List<DataValues>();
+            
         }
 
         #region ENCAPSULATION METHODS or ACCESSOR & MUTATOR METHODS
@@ -23,7 +23,6 @@ namespace com.npc.desktop.entities
         #endregion
 
         #region COLLECTIONS
-        public ICollection<DataValues> dataValues { get; set; }
         #endregion
     }
 }

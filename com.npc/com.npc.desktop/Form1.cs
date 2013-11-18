@@ -109,8 +109,7 @@ namespace com.npc.desktop
                 }
 
                 dataValue.dataTypeId = dataTypeSessionData.getDataTypeByName(dr[8].ToString()).dataTypeId;
-                dataValue.dataCategoryId = dataCategorySessionData.getDataCategoryByName("psa").dataCategoryId;
-
+                
                 using (var db = new Dbase())
                 {
                     db.dataValues.Add(dataValue);
@@ -121,7 +120,7 @@ namespace com.npc.desktop
                     exc.Open(fileName);
                     exc.Worksheet("PSC_ECs");
 
-                    foreach (Kwh kwh in psa.Kwh_Data)
+                    foreach (PscEcsData kwh in psa.Kwh_Data)
                     {
                         DataContent content = new DataContent();
                         content.header = kwh.Name;

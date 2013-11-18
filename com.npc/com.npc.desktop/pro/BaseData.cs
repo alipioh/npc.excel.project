@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace com.npc.desktop.pro
 {
-    class Mwh
+    class BaseData
     {
         private String name;
         private String column;
-        private String keyWord = "Mwh";
-
+        
         public String Name
         {
             get { return name; }
@@ -24,11 +22,5 @@ namespace com.npc.desktop.pro
             set { column = value; }
         }
 
-       
-        public String Keyword
-        {
-            get { return keyWord; }
-            set { keyWord = value; }
-        }
     }
 }

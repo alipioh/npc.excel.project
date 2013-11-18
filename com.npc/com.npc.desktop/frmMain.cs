@@ -18,12 +18,25 @@ namespace com.npc.desktop
 {
     public partial class frmMain : Form
     {
-        private DataContentSessionData dataContentSessionData;
-        private AreaSessionData areaSessionData;
-        private PlantDataSession plantSessionData;
-        private RegionSessionData regionSessionData;
-        private CooperativeSessionData cooperativeSessionData;
+        private DataContentSessionData dataContentSessionData = new DataContentSessionData();
+        private AreaSessionData areaSessionData= new AreaSessionData();
+        private PlantDataSession plantSessionData = new PlantDataSession();
+        private RegionSessionData regionSessionData = new RegionSessionData();
+        private CooperativeSessionData cooperativeSessionData = new CooperativeSessionData();
+        private DataTypeSessionData dataTypeSessionData = new DataTypeSessionData();
+        private DataValuesDataSession dataValuesSessionData = new DataValuesDataSession();
+        private CooperativeDataValuesSessionData cooperativeDataValueSessionData = new CooperativeDataValuesSessionData();
+        private CooperativeDataContentSessionData cooperativeDataContentSessionData = new CooperativeDataContentSessionData();
+        
+        private DataContent dataContent = new DataContent();
+        private DataValues dataValue = new DataValues();
+        private DataCategory dataCategory = new DataCategory();
+        private DataType dataType = new DataType();
+        private CooperativeDataValues cooperativeDataValue = new CooperativeDataValues();
+        private CooperativeDataContent cooperativeDataContent = new CooperativeDataContent();
 
+        private ExcelUtil excel;
+            
         public frmMain()
         {
             InitializeComponent();
@@ -67,17 +80,13 @@ namespace com.npc.desktop
             Demand demand = (Demand)propertyGrid.SelectedObject;
             NumberToLetterUtil converter = new NumberToLetterUtil();
 
-            ExcelUtil excel = new ExcelUtil();
-            
-            DataContent dataContent = new DataContent();
-            DataValues dataValue = new DataValues();
-            DataCategory dataCategory = new DataCategory();
-            
             NumberToLetterUtil numUtil = new NumberToLetterUtil();
 
             if (demand.RowSequenceType == RowSequenceType.Range) {
                 try
                 {
+                    ExcelUtil excel = new ExcelUtil();
+            
                     excel.Open(demand.Path + "/" + demand.FileName);
                     excel.Worksheet(demand.WorkSheet);
 
@@ -89,6 +98,7 @@ namespace com.npc.desktop
                             Console.WriteLine(numUtil.getLetterByNumber(inner) + outer + " = " + obj[outer, inner]);
                         }
                     }
+                    excel.Close();
                 }
                 catch (WorksheetNotFoundException wnfe)
                 {
@@ -97,31 +107,19 @@ namespace com.npc.desktop
                 catch (RangeInvalidException rie) {
                     MessageBox.Show(null, rie.Message, "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
             }
             else if (demand.RowSequenceType == RowSequenceType.Collection) {
-                try {
-                    excel.AddWorkbook();
-                    excel.Worksheet("Sheet1");
-
-                    foreach (String cntr in demand.RowCollection)
-                    {
-                        foreach (TotalElectricityPurchased electricity in demand.ElectricityPurchase)
-                        {
-                            String cell = electricity.Column + cntr;
-                            String path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
-                            excel.WriteCell(1, 1, path);
-                            Console.WriteLine(electricity.Name + " - " + excel.ReadCell(1, "A"));
-                        }
-                    }
+                try
+                {
+                    readDDPDemandByCollection(demand);
                 }
                 catch (NullReferenceException nre)
                 {
-                    MessageBox.Show(null,"Collection of row sequence is null", "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(null, nre.Message.ToString(), "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
-            excel.Close();
+           
             Console.WriteLine("Success!");
             Console.WriteLine(demand.Region);
         }
@@ -138,8 +136,176 @@ namespace com.npc.desktop
                 demand.Path = path;
                 propertyGrid.SelectedObject = demand;
             }
-            
+
         }
+
+
+        #region DDP-DEMAND BY COLLECTION
+        private void readDDPDemandByCollection(Demand demand)
+        {
+            excel = new ExcelUtil();
+
+            excel.AddWorkbook();
+            excel.Worksheet("Sheet1");
+
+            String cell = null;
+            String path = null;
+            foreach (String cntr in demand.RowCollection)
+            {
+                cell = demand.DdpDemandkeywordColumn + cntr;
+                path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
+                excel.WriteCell(1, 1, path);
+                String data = excel.ReadCell("A1").ToString();
+
+                dataType = new DataType(data);
+                dataType = (DataType)dataTypeSessionData.createIfNotExist(dataType);
+
+                Area area = new Area("Luzon");
+                area = (Area)areaSessionData.createIfNotExist(area);
+
+                Regions region = new Regions(demand.Region.ToString().Replace("_", " "), area);
+                region = (Regions)regionSessionData.createIfNotExist(region);
+
+                Cooperative cooperative = new Cooperative(demand.Cooperative, demand.CooperativeAccronym, region);
+                cooperative = (Cooperative)cooperativeSessionData.createIfNotExist(cooperative);
+
+                CooperativeDataValues coopSearch = cooperativeDataValueSessionData.findDataValuesByCoopertiveId(cooperative, dataType);
+                if (coopSearch != null)
+                {
+                    cooperativeDataContentSessionData.deleteByDataValueId(coopSearch.cooperativeDataValuesId);
+                    cooperativeDataValue = coopSearch;
+                }
+                else
+                {
+                    cooperativeDataValue = new CooperativeDataValues(cooperative, dataType);
+                    cooperativeDataValue = (CooperativeDataValues)cooperativeDataValueSessionData.add(cooperativeDataValue);
+                }
+
+                writeDDPDemandCoopCollection(demand, cntr);
+            }
+
+            excel.Close();
+        }
+
+        private void writeDDPDemandCoopCollection(Demand demand, String dataType) {
+            foreach (DdpDemandData electricity in demand.DdpDemandData)
+            {
+                String cell = electricity.Column + dataType;
+                String path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
+                excel.WriteCell(1, 1, path);
+                Console.WriteLine(electricity.Name + " - " + excel.ReadCell(1, "A"));
+
+                cooperativeDataContent = new CooperativeDataContent();
+                cooperativeDataContent.header = electricity.Name;
+                cooperativeDataContent.value = excel.ReadCell("A1");
+                cooperativeDataContent.cooperativeDataValuesId = cooperativeDataValue.cooperativeDataValuesId;
+                cooperativeDataContentSessionData.add(cooperativeDataContent);
+            }
+        }
+        #endregion
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Demand demand = (Demand)propertyGrid.SelectedObject;
+            NumberToLetterUtil converter = new NumberToLetterUtil();
+
+            NumberToLetterUtil numUtil = new NumberToLetterUtil();
+
+            if (demand.RowSequenceType == RowSequenceType.Range)
+            {
+                
+            }
+            else if (demand.RowSequenceType == RowSequenceType.Collection)
+            {
+                try
+                {
+                    excel = new ExcelUtil();
+
+                    excel.AddWorkbook();
+                    excel.Worksheet("Sheet1");
+
+                    String cell = null;
+                    String path = null;
+
+                    foreach (String row in demand.RowCollection) {
+                        cell = demand.PlantColumnIndex + row;
+                        path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
+                        excel.WriteCell(1, 1, path);
+                        String plantName = excel.ReadCell("A1").ToString();
+                        Console.WriteLine(plantName);
+
+                        
+                        int rowIndex = Int32.Parse(row)+2;
+                        for (int cntr = rowIndex; cntr < (rowIndex + 2); cntr++)
+                        {
+                            cell = demand.SupplyContractedKeywordColumn + cntr;
+                            path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
+                            excel.WriteCell(1, 1, path);
+                            String data = excel.ReadCell("A1").ToString();
+
+                            dataType = new DataType(data);
+                            dataType = (DataType)dataTypeSessionData.createIfNotExist(dataType);
+                            Console.WriteLine("data: " + dataType.dataTypeId);
+                            
+
+
+                            Area area = new Area("Luzon");
+                            area = (Area)areaSessionData.createIfNotExist(area);
+
+                            Regions region = new Regions(demand.SupplyContractedRegion.ToString().Replace("_", " "), area.areaId);
+                            region = (Regions)regionSessionData.createIfNotExist(region);
+
+                            Cooperative cooperative = new Cooperative(demand.SupplyContractedCooperative, demand.SupplyContractedCooperativeAccronym, region.regionId);
+                            cooperative = (Cooperative)cooperativeSessionData.createIfNotExist(cooperative);
+
+                            Plant plant = new Plant(plantName, cooperative.cooperativeId );
+                            plant = (Plant)plantSessionData.createIfNotExist(plant);
+                            Console.WriteLine("Plant: " + plant.plantId);
+
+                            //DataValues coopSearch = data
+                            DataValues coopSearch = dataValuesSessionData.findDataValuesByPlantId(plant, dataType);
+                            if (coopSearch != null)
+                            {
+                                dataContentSessionData.deleteByDataValueId(coopSearch.dataValuesId);
+                                dataValue = coopSearch;
+                            }
+                            else
+                            {
+                                dataValue = new DataValues();
+                                dataValue.plantId = plant.plantId;
+                                dataValue.dataTypeId = dataType.dataTypeId;
+                                dataValue = (DataValues)dataValuesSessionData.add(dataValue);
+                            }
+
+                            foreach (DDPSupplyContractedData contractedData in demand.SupplyContractedData)
+                            {
+                                cell = contractedData.Column + cntr;
+                                path = @"='" + demand.Path + "\\[" + demand.FileName + "]" + demand.WorkSheet + "'!" + cell;
+                                excel.WriteCell(1, 1, path);
+                                Console.WriteLine(contractedData.Name + " - " + excel.ReadCell(1, "A"));
+
+                                dataContent = new DataContent();
+                                dataContent.header = contractedData.Name;
+                                dataContent.value = excel.ReadCell("A1");
+                                dataContent.dataValuesId = dataValue.dataValuesId;
+                                dataContentSessionData.add(dataContent);
+                            }
+                        }
+                    }
+
+                    excel.Close();
+                }
+                catch (NullReferenceException nre)
+                {
+                    MessageBox.Show(null, nre.Message.ToString(), "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+
+            Console.WriteLine("Success!");
+            Console.WriteLine(demand.Region);
+        }
+
     }
 }
 

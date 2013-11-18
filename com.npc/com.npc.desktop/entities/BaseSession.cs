@@ -11,11 +11,73 @@ namespace com.npc.desktop.entities
         private CooperativeSessionData cooperativeSessionData;
         private PlantDataSession plantSessionData;
         private RegionSessionData regionSessionData;
+        private DataTypeSessionData dataTypeSessionData;
 
-        public void createIfNotExist(Object obj) {
-            if (!isExist(obj)) {
-                add(obj);
+        public Object createIfNotExist(Object obj) {
+            object resultObj = null;
+
+            if (!isExist(obj))
+            {
+                resultObj = add(obj);
             }
+            else {
+                if (obj.GetType() == typeof(DataType)) {
+                    resultObj = (DataType)search(obj);
+                }
+                else if (obj.GetType() == typeof(Area)) {
+                    resultObj = (Area)search(obj);
+                }
+                else if (obj.GetType() == typeof(Regions))
+                {
+                    resultObj = (Regions)search(obj);
+                }
+                else if (obj.GetType() == typeof(Cooperative))
+                {
+                    resultObj = (Cooperative)search(obj);
+                }
+                else if (obj.GetType() == typeof(Plant))
+                {
+                    resultObj = (Plant)search(obj);
+                }
+                
+            }
+
+            return resultObj;
+        }
+
+        public Object search(Object obj) {
+            object resultObj = null;
+            if (obj.GetType() == typeof(Area))
+            {
+                areaSessionData = new AreaSessionData();
+                Area area = areaSessionData.getAreaByName((Area)obj);
+                resultObj = area;
+            }
+            else if (obj.GetType() == typeof(Cooperative))
+            {
+                cooperativeSessionData = new CooperativeSessionData();
+                Cooperative coop = cooperativeSessionData.getCooperativeByName((Cooperative)obj);
+                resultObj = coop;
+            }
+            else if (obj.GetType() == typeof(Plant))
+            {
+                plantSessionData = new PlantDataSession();
+                Plant plant = plantSessionData.getPlantByName((Plant)obj);
+                resultObj = plant;
+            }
+            else if (obj.GetType() == typeof(Regions))
+            {
+                regionSessionData = new RegionSessionData();
+                Regions region = regionSessionData.getRegionByName((Regions)obj);
+                resultObj = region;
+            }
+            else if (obj.GetType() == typeof(DataType))
+            {
+                dataTypeSessionData = new DataTypeSessionData();
+                DataType dataType = dataTypeSessionData.getDataTypeByName((DataType)obj);
+                resultObj = dataType;
+            }
+            return resultObj;
         }
 
         public void deleteIfExist(Object obj) {
@@ -28,61 +90,108 @@ namespace com.npc.desktop.entities
             bool exist = false;
 
             if (obj.GetType() == typeof(Area)) {
+                areaSessionData = new AreaSessionData();
                 Area area = areaSessionData.getAreaByName((Area)obj);
                 exist = (area != null) ? true : false;
             }
             else if (obj.GetType() == typeof(Cooperative)) {
+                cooperativeSessionData = new CooperativeSessionData();
                 Cooperative coop = cooperativeSessionData.getCooperativeByName((Cooperative)obj);
                 exist = (coop != null) ? true : false;
             }
             else if (obj.GetType() == typeof(Plant)) {
+                plantSessionData = new PlantDataSession();
                 Plant plant = plantSessionData.getPlantByName((Plant)obj);
                 exist = (plant != null) ? true : false;
             }
             else if (obj.GetType() == typeof(Regions)) {
+                regionSessionData = new RegionSessionData();
                 Regions region = regionSessionData.getRegionByName((Regions)obj);
                 exist = (region != null) ? true : false;
+            }
+            else if (obj.GetType() == typeof(DataType))
+            {
+                exist = ((DataType)search(obj) != null) ? true : false;
             }
 
             return exist;
         }
 
-        public void add(Object obj)
+        public Object add(Object obj)
         {
+            object resultObj = null;
             using (var db = new Dbase())
             {
                 if (obj.GetType() == typeof(Area))
                 {
                     Area area = (Area) obj;
                     db.areas.Add(area);
+                    db.SaveChanges();
+
+                    resultObj = area;
                 }
                 else if (obj.GetType() == typeof(Cooperative))
                 {
                     Cooperative cooperative = (Cooperative)obj;
                     db.cooperatives.Add(cooperative);
+                    db.SaveChanges();
+
+                    resultObj = cooperative;
                 }
                 else if (obj.GetType() == typeof(Plant))
                 {
                     Plant plant = (Plant)obj;
                     db.plants.Add(plant);
+                    db.SaveChanges();
+
+                    resultObj = plant;
                 }else if(obj.GetType() == typeof(Regions))
                 {
                     Regions region = (Regions)obj;
                     db.regions.Add(region);
-                }
-                else if (obj.GetType() == typeof(DataCategory))
-                {
-                    DataCategory dataCategory = (DataCategory)obj;
-                    db.dataCategories.Add(dataCategory);
+                    db.SaveChanges();
+
+                    resultObj = region;
                 }
                 else if (obj.GetType() == typeof(DataValues)) {
                     DataValues dataValue = (DataValues)obj;
                     db.dataValues.Add(dataValue);
+                    db.SaveChanges();
+
+                    resultObj = dataValue;
+                }
+                else if (obj.GetType() == typeof(DataContent))
+                {
+                    DataContent dataContent = (DataContent)obj;
+                    db.dataContents.Add(dataContent);
+                    db.SaveChanges();
+
+                    resultObj = dataContent;
+                }
+                else if (obj.GetType() == typeof(CooperativeDataValues))
+                {
+                    CooperativeDataValues cooperativeDataValues = (CooperativeDataValues)obj;
+                    db.cooperativeDataValues.Add(cooperativeDataValues);
+                    db.SaveChanges();
+
+                    resultObj = cooperativeDataValues;
+                }else if(obj.GetType() == typeof(CooperativeDataContent)){
+                    CooperativeDataContent cooperativeDataContent = (CooperativeDataContent)obj;
+                    db.cooperativeDataContent.Add(cooperativeDataContent);
+                    db.SaveChanges();
+
+                    resultObj = cooperativeDataContent;
+                }
+                else if (obj.GetType() == typeof(DataType))
+                {
+                    DataType dataType = (DataType)obj;
+                    db.dataTypes.Add(dataType);
+                    db.SaveChanges();
+
+                    resultObj = dataType;
                 }
 
-                int x = db.SaveChanges();
-                Console.WriteLine("No. of rows affected : " + x);
-                Console.WriteLine("Database Save!");
+                return resultObj;
             }
         }
 
@@ -117,13 +226,14 @@ namespace com.npc.desktop.entities
 
                     db.regions.Remove(regionDelete);
                 }
-                else if (obj.GetType() == typeof(DataCategory))
-                {
-                    DataCategory dataCategory = (DataCategory)obj;
-                    DataCategory dataCategoryDelete = db.dataCategories.Where(dc => dc.name == dataCategory.name).FirstOrDefault<DataCategory>();
-
-                    db.dataCategories.Remove(dataCategoryDelete);
+                else if (obj.GetType() == typeof(CooperativeDataValues)) {
+                    CooperativeDataValues cooperativeDataValues = (CooperativeDataValues)obj;
+                    db.cooperativeDataValues.Remove(cooperativeDataValues);
+                }else if(obj.GetType() == typeof(CooperativeDataContent)){
+                    CooperativeDataContent cooperativeDataContent = (CooperativeDataContent)obj;
+                    db.cooperativeDataContent.Remove(cooperativeDataContent);
                 }
+
 
                 db.SaveChanges();
             }

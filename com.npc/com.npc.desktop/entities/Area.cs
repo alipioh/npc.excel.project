@@ -28,6 +28,10 @@ namespace com.npc.desktop.entities
             regions = new List<Regions>();
         }
 
+        public Area(String name) {
+            this.name = name;
+        }
+
         #region ENCAPSULATION METHODS OR ACCESSOR & MUTATOR METHODS
         [Key]
         public Int32 areaId { get; set; }

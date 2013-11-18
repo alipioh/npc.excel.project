@@ -11,6 +11,7 @@ namespace com.npc.desktop.entities
     [Table("npcDataContent")]
     class DataContent
     {
+        public static String ENTITY_NAME = "npcDataContent";
         #region FIELDS
         [Key]
         public Int32 dataContentId { get; set; }

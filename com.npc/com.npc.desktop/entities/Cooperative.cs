@@ -14,6 +14,7 @@ namespace com.npc.desktop.entities
         #region Constructor
         public Cooperative() {
             plants = new List<Plant>();
+            cooperativeDataValues = new List<CooperativeDataValues>();
         }
 
         private Cooperative(String coopName, String accronym) : this()
@@ -47,6 +48,7 @@ namespace com.npc.desktop.entities
         
         #region COLLECTION
         public ICollection<Plant> plants { get; set; }
+        public ICollection<CooperativeDataValues> cooperativeDataValues { get; set; }
         #endregion
     }
 }

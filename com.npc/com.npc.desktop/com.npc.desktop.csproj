@@ -71,6 +71,10 @@
     <Compile Include="entities\AreaSessionData.cs" />
     <Compile Include="entities\BaseSession.cs" />
     <Compile Include="entities\Cooperative.cs" />
+    <Compile Include="entities\CooperativeDataContent.cs" />
+    <Compile Include="entities\CooperativeDataContentSessionData.cs" />
+    <Compile Include="entities\CooperativeDataValues.cs" />
+    <Compile Include="entities\CooperativeDataValuesSessionData.cs" />
     <Compile Include="entities\CooperativeSessionData.cs" />
     <Compile Include="entities\DataCategory.cs" />
     <Compile Include="entities\DataCategorySessionData.cs" />
@@ -87,10 +91,12 @@
     <Compile Include="entities\Regions.cs" />
     <Compile Include="entities\RegionSessionData.cs" />
     <Compile Include="enums\AreaType.cs" />
+    <Compile Include="enums\DataTypes.cs" />
     <Compile Include="enums\RegionType.cs" />
     <Compile Include="enums\RowSequenceType.cs" />
     <Compile Include="exceptions\CollectionNullException.cs" />
     <Compile Include="exceptions\RangeInvalidException.cs" />
+    <Compile Include="exceptions\SequenceTypeInvalidException.cs" />
     <Compile Include="exceptions\WorksheetNotFoundException.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -107,17 +113,15 @@
     <Compile Include="interfaces\IReaderSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="pro\DDPSupplyContracted.cs" />
+    <Compile Include="pro\BaseData.cs" />
     <Compile Include="pro\DDPSupplyContractedData.cs" />
     <Compile Include="pro\Demand.cs" />
     <Compile Include="pro\Excel.cs" />
-    <Compile Include="pro\Kwh.cs" />
-    <Compile Include="pro\Mwh.cs" />
+    <Compile Include="pro\PscEcsData.cs" />
     <Compile Include="pro\PSA.cs" />
     <Compile Include="pro\RowSequenceCollection.cs" />
     <Compile Include="pro\RowSequenceRange.cs" />
-    <Compile Include="pro\TotalElectricityPurchased.cs" />
-    <Compile Include="pro\TotalPeakDemand.cs" />
+    <Compile Include="pro\DdpDemandData.cs" />
     <Compile Include="utils\ExcelUtil.cs" />
     <Compile Include="utils\NumberToLetterUtil.cs" />
     <EmbeddedResource Include="Form1.resx">

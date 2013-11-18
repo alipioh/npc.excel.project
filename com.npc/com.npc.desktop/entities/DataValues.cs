@@ -21,27 +21,17 @@ namespace com.npc.desktop.entities
             contents = new List<DataContent>();
         }
 
+        public DataValues(Plant plant, DataType dataType)
+            : base()
+        {
+            this.plantId = plant.plantId;
+            this.dataTypeId = dataTypeId;
+        }
+
         #region ENCAPSULATION METHOD / ACCESSOR & MUTATOR METHODS
         [Key]
         public Int32 dataValuesId { get; set; }
        
-        /*
-        public Double d2008 { get; set; }
-        public Double d2009 { get; set; }
-        public Double d2010 { get; set; }
-        public Double d2011 { get; set; }
-        public Double d2012 { get; set; }
-        public Double d2013 { get; set; }
-        public Double d2014 { get; set; }
-        public Double d2015 { get; set; }
-        public Double d2016 { get; set; }
-        public Double d2017 { get; set; }
-        public Double d2018 { get; set; }
-        public Double d2019 { get; set; }
-        public Double d2020 { get; set; }
-        public Double d2021 { get; set; }
-        public Double d2022 { get; set; }
-       */
         #endregion
 
         #region FOREIGN KEY FOR DATATYPE
@@ -58,12 +48,6 @@ namespace com.npc.desktop.entities
         public virtual Plant plant { get; set; }
         #endregion
 
-        #region FOREIGN KEY FOR DATA CATEGORY
-        public Int32 dataCategoryId { get; set; }
-        
-        [ForeignKey("dataCategoryId")]
-        public virtual DataCategory dataCategory { get; set; }
-        #endregion
 
         #region COLLECTIONS
         public ICollection<DataContent> contents {get;set;}

@@ -5,13 +5,13 @@ using System.Text;
 
 namespace com.npc.desktop.entities
 {
-    class DataContentSessionData : BaseSession
+    class CooperativeDataContentSessionData : BaseSession
     {
         public void deleteByDataValueId(Int32 dataValueId)
         {
             Dbase.getCurrentInstance()
                  .Database
-                 .ExecuteSqlCommand("DELETE FROM " + DataContent.ENTITY_NAME + " WHERE dataValuesId=" + dataValueId);
+                 .ExecuteSqlCommand("DELETE FROM " + CooperativeDataContent.ENTITY_NAME + " WHERE cooperativeDataValuesId=" + dataValueId);
         }
     }
 }

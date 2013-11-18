@@ -31,30 +31,31 @@
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.button1 = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button2 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pnlDemand = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.pnlPSA = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtPSA = new System.Windows.Forms.TextBox();
-            this.txtDemand = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.txtPSA = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pnlDemand = new System.Windows.Forms.Panel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.txtDemand = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.pnlDemand.SuspendLayout();
             this.pnlPSA.SuspendLayout();
+            this.pnlDemand.SuspendLayout();
             this.SuspendLayout();
             // 
             // propertyGrid
@@ -62,7 +63,7 @@
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(317, 273);
+            this.propertyGrid.Size = new System.Drawing.Size(252, 273);
             this.propertyGrid.TabIndex = 0;
             // 
             // button1
@@ -89,19 +90,18 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(842, 273);
-            this.splitContainer1.SplitterDistance = 521;
+            this.splitContainer1.Size = new System.Drawing.Size(911, 273);
+            this.splitContainer1.SplitterDistance = 655;
             this.splitContainer1.TabIndex = 2;
             // 
-            // button2
+            // textBox3
             // 
-            this.button2.Location = new System.Drawing.Point(84, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Demand";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox3.Location = new System.Drawing.Point(0, 73);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(655, 200);
+            this.textBox3.TabIndex = 4;
             // 
             // panel1
             // 
@@ -112,7 +112,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(521, 73);
+            this.panel1.Size = new System.Drawing.Size(655, 73);
             this.panel1.TabIndex = 3;
             // 
             // panel2
@@ -122,30 +122,8 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 29);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(521, 44);
+            this.panel2.Size = new System.Drawing.Size(655, 44);
             this.panel2.TabIndex = 4;
-            // 
-            // pnlDemand
-            // 
-            this.pnlDemand.Controls.Add(this.button5);
-            this.pnlDemand.Controls.Add(this.button4);
-            this.pnlDemand.Controls.Add(this.txtDemand);
-            this.pnlDemand.Controls.Add(this.label1);
-            this.pnlDemand.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlDemand.Location = new System.Drawing.Point(0, 20);
-            this.pnlDemand.Name = "pnlDemand";
-            this.pnlDemand.Size = new System.Drawing.Size(521, 24);
-            this.pnlDemand.TabIndex = 0;
-            this.pnlDemand.Visible = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "PATH: ";
             // 
             // pnlPSA
             // 
@@ -156,61 +134,8 @@
             this.pnlPSA.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlPSA.Location = new System.Drawing.Point(0, -4);
             this.pnlPSA.Name = "pnlPSA";
-            this.pnlPSA.Size = new System.Drawing.Size(521, 24);
+            this.pnlPSA.Size = new System.Drawing.Size(655, 24);
             this.pnlPSA.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "PATH: ";
-            // 
-            // txtPSA
-            // 
-            this.txtPSA.Location = new System.Drawing.Point(49, 4);
-            this.txtPSA.Name = "txtPSA";
-            this.txtPSA.Size = new System.Drawing.Size(249, 20);
-            this.txtPSA.TabIndex = 4;
-            // 
-            // txtDemand
-            // 
-            this.txtDemand.Location = new System.Drawing.Point(49, 3);
-            this.txtDemand.Name = "txtDemand";
-            this.txtDemand.Size = new System.Drawing.Size(249, 20);
-            this.txtDemand.TabIndex = 5;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(301, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(96, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Browse PSA";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(301, 1);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(96, 23);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "Browse Demand";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(403, 1);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(96, 23);
-            this.button5.TabIndex = 7;
-            this.button5.Text = "Save";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -222,24 +147,111 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // textBox3
+            // button3
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Location = new System.Drawing.Point(0, 73);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(521, 200);
-            this.textBox3.TabIndex = 4;
+            this.button3.Location = new System.Drawing.Point(301, 2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(96, 23);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "Browse PSA";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // txtPSA
+            // 
+            this.txtPSA.Location = new System.Drawing.Point(49, 4);
+            this.txtPSA.Name = "txtPSA";
+            this.txtPSA.Size = new System.Drawing.Size(249, 20);
+            this.txtPSA.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "PATH: ";
+            // 
+            // pnlDemand
+            // 
+            this.pnlDemand.Controls.Add(this.button7);
+            this.pnlDemand.Controls.Add(this.button5);
+            this.pnlDemand.Controls.Add(this.button4);
+            this.pnlDemand.Controls.Add(this.txtDemand);
+            this.pnlDemand.Controls.Add(this.label1);
+            this.pnlDemand.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlDemand.Location = new System.Drawing.Point(0, 20);
+            this.pnlDemand.Name = "pnlDemand";
+            this.pnlDemand.Size = new System.Drawing.Size(655, 24);
+            this.pnlDemand.TabIndex = 0;
+            this.pnlDemand.Visible = false;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(403, 1);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(96, 23);
+            this.button5.TabIndex = 7;
+            this.button5.Text = "Save";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(301, 1);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(96, 23);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Browse Demand";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // txtDemand
+            // 
+            this.txtDemand.Location = new System.Drawing.Point(49, 3);
+            this.txtDemand.Name = "txtDemand";
+            this.txtDemand.Size = new System.Drawing.Size(249, 20);
+            this.txtDemand.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "PATH: ";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(84, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Demand";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(505, 1);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(96, 23);
+            this.button7.TabIndex = 8;
+            this.button7.Text = "Save";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 273);
+            this.ClientSize = new System.Drawing.Size(911, 273);
             this.Controls.Add(this.splitContainer1);
             this.Name = "frmMain";
             this.Text = "frmMain";
@@ -251,10 +263,10 @@
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.pnlDemand.ResumeLayout(false);
-            this.pnlDemand.PerformLayout();
             this.pnlPSA.ResumeLayout(false);
             this.pnlPSA.PerformLayout();
+            this.pnlDemand.ResumeLayout(false);
+            this.pnlDemand.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -280,5 +292,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.Button button7;
     }
 }

@@ -15,13 +15,20 @@ namespace com.npc.desktop.entities
 {
     [Serializable]
     [Table("npcDataType")]
-    class DataType 
+    class DataType
     {
         public static readonly String _KH = "kh";
         public static readonly String _MWH = "mwh";
 
         public DataType() {
             dataValues = new List<DataValues>();
+            cooperativeDataValues = new List<CooperativeDataValues>();
+        }
+
+        public DataType(String name)
+            : base()
+        {
+            this.name = name;
         }
 
         #region ENCAPSULATION METHOD OR ACCESSOR & MUTATOR METHODS
@@ -33,6 +40,7 @@ namespace com.npc.desktop.entities
 
         #region COLLECTIONS
         public ICollection<DataValues> dataValues { get; set; }
+        public ICollection<CooperativeDataValues> cooperativeDataValues { get; set; }
         #endregion
     }
 }

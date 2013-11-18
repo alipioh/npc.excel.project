@@ -5,11 +5,9 @@ using System.Text;
 
 namespace com.npc.desktop.pro
 {
-    class DDPSupplyContractedData : BaseData
+    class DdpDemandData : BaseData
     {
-        public DDPSupplyContractedData() : base(){
-
-        }
+        public DdpDemandData() : base() { }
 
     }
 }

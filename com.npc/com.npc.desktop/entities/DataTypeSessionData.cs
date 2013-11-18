@@ -9,8 +9,15 @@ namespace com.npc.desktop.entities
     {
         public DataType getDataTypeByName(String dataTypeName)
         {
+            DataType dataType = new DataType();
+            dataType.name = dataTypeName;
+            return getDataTypeByName(dataType);
+        }
+
+        public DataType getDataTypeByName(DataType dataType)
+        {
             return Dbase.getCurrentInstance().dataTypes
-                        .Where(dt => dt.name == dataTypeName)
+                        .Where(dt => dt.name == dataType.name)
                         .FirstOrDefault<DataType>();
         }
     }

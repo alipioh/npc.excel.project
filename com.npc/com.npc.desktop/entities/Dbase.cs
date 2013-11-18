@@ -48,15 +48,25 @@ namespace com.npc.desktop.entities
                 .WithMany(p => p.dataValues)
                 .HasForeignKey(p => p.plantId);
 
-            modelBuilder.Entity<DataValues>()
-                .HasRequired<DataCategory>(dc => dc.dataCategory)
-                .WithMany(dc => dc.dataValues)
-                .HasForeignKey(dc => dc.dataCategoryId);
-
             modelBuilder.Entity<DataContent>()
                 .HasRequired<DataValues>(dv => dv.dataValues)
                 .WithMany(dv => dv.contents)
                 .HasForeignKey(dv => dv.dataValuesId);
+
+            modelBuilder.Entity<CooperativeDataValues>()
+                .HasRequired<Cooperative>(c => c.cooperative)
+                .WithMany(c => c.cooperativeDataValues)
+                .HasForeignKey(c => c.cooperativeId);
+
+            modelBuilder.Entity<CooperativeDataValues>()
+                .HasRequired<DataType>(dt => dt.dataType)
+                .WithMany(dt => dt.cooperativeDataValues)
+                .HasForeignKey(dt => dt.dataTypeId);
+
+            modelBuilder.Entity<CooperativeDataContent>()
+                .HasRequired<CooperativeDataValues>(cdv => cdv.cooperativeDataValues)
+                .WithMany(cdv => cdv.contents)
+                .HasForeignKey(cdv => cdv.cooperativeDataValuesId);
 
             Console.WriteLine("Created Entities");
         }
@@ -71,5 +81,8 @@ namespace com.npc.desktop.entities
         public DbSet<Regions> regions { get; set; }
         public DbSet<Cooperative> cooperatives { get; set; }
         public DbSet<DataCategory> dataCategories { get; set; }
+
+        public DbSet<CooperativeDataValues> cooperativeDataValues { get; set; }
+        public DbSet<CooperativeDataContent> cooperativeDataContent { get; set; }
     }
 }

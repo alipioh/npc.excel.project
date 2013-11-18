@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace com.npc.desktop.pro
 {
-    class DDPSupplyContractedData : BaseData
+    class PscEcsData : BaseData
     {
-        public DDPSupplyContractedData() : base(){
 
-        }
+        public PscEcsData() : base() { }
 
     }
 }
