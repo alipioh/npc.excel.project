@@ -40,6 +40,7 @@
             this.txtPSA = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.pnlDemand = new System.Windows.Forms.Panel();
+            this.button7 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.txtDemand = new System.Windows.Forms.TextBox();
@@ -47,7 +48,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -106,6 +107,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button2);
@@ -187,6 +189,16 @@
             this.pnlDemand.TabIndex = 0;
             this.pnlDemand.Visible = false;
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(505, 1);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(96, 23);
+            this.button7.TabIndex = 8;
+            this.button7.Text = "Save";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(403, 1);
@@ -237,15 +249,15 @@
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
-            // button7
+            // button8
             // 
-            this.button7.Location = new System.Drawing.Point(505, 1);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(96, 23);
-            this.button7.TabIndex = 8;
-            this.button7.Text = "Save";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button8.Location = new System.Drawing.Point(301, 3);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 5;
+            this.button8.Text = "Query";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // frmMain
             // 
@@ -293,5 +305,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
     }
 }

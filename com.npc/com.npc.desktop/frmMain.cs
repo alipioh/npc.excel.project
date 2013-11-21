@@ -163,10 +163,10 @@ namespace com.npc.desktop
                 Area area = new Area("Luzon");
                 area = (Area)areaSessionData.createIfNotExist(area);
 
-                Regions region = new Regions(demand.Region.ToString().Replace("_", " "), area);
+                Regions region = new Regions(demand.Region.ToString().Replace("_", " "), area.areaId);
                 region = (Regions)regionSessionData.createIfNotExist(region);
 
-                Cooperative cooperative = new Cooperative(demand.Cooperative, demand.CooperativeAccronym, region);
+                Cooperative cooperative = new Cooperative(demand.Cooperative, demand.CooperativeAccronym, region.regionId);
                 cooperative = (Cooperative)cooperativeSessionData.createIfNotExist(cooperative);
 
                 CooperativeDataValues coopSearch = cooperativeDataValueSessionData.findDataValuesByCoopertiveId(cooperative, dataType);
@@ -304,6 +304,37 @@ namespace com.npc.desktop
 
             Console.WriteLine("Success!");
             Console.WriteLine(demand.Region);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            foreach (Regions region in regionSessionData.getAllRegions()) {
+                foreach (Cooperative coop in cooperativeSessionData.getCooperativeByRegion(region.regionId))
+                {
+                    foreach (Plant plant in plantSessionData.getAllPlantByCoop(coop.cooperativeId)) {
+                        if (plant == null) continue;
+
+                        Console.WriteLine("Cooperative: " + plant.name);
+
+                        foreach (DataValues dataValue in dataValuesSessionData.findDataValuesByPlant(plant))
+                        {
+                            Console.WriteLine("Id: " + dataValue.dataValuesId);
+                            foreach (DataContent dataContent in dataContentSessionData.findDataContentByDataValuesId(dataValue))
+                            {
+                                Console.WriteLine("Plant Content: " + dataContent.header);
+                            }
+                        }
+                    }
+                   
+                    foreach (CooperativeDataValues cooperativeDataValue in cooperativeDataValueSessionData.findDataValuesByCooperativeId(coop)) {
+                        foreach (CooperativeDataContent coopDataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(cooperativeDataValue)) {
+                            Console.WriteLine("Coop Content: " + coopDataContent.value);
+                        }
+                    }
+                }
+            }
+            
+            
         }
 
     }

@@ -12,6 +12,12 @@ namespace com.npc.desktop.entities
                     .Where(cdv => cdv.cooperative.cooperativeId == coop.cooperativeId)
                     .Where(cdv => cdv.dataTypeId == dataType.dataTypeId)
                     .SingleOrDefault<CooperativeDataValues>();
-        }  
+        }
+
+        public List<CooperativeDataValues> findDataValuesByCooperativeId(Cooperative coop) {
+            return (List<CooperativeDataValues>)Dbase.getCurrentInstance().cooperativeDataValues
+                        .Where(cdv => cdv.cooperative.cooperativeId == coop.cooperativeId)
+                        .ToList<CooperativeDataValues>();
+        }
     }
 }

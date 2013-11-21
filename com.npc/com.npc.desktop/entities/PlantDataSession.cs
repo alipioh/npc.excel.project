@@ -23,9 +23,23 @@ namespace com.npc.desktop.entities
                 .FirstOrDefault<Plant>();
         }
 
+        public Plant getPlantByCoop(Cooperative coop) {
+            return getPlantByCoop(coop.name);
+        }
+
         public Plant getPlantByCoop(String coopName) {
             return Dbase.getCurrentInstance().plants
                     .Where(p => p.cooperative.name == coopName)
+                    .FirstOrDefault<Plant>();
+        }
+
+        public Plant getPlantByCoopId(Int32 coopId)
+        {
+            var db = new Dbase();
+            db.Configuration.LazyLoadingEnabled = false;
+
+            return db.plants
+                    .Where(p => p.cooperative.cooperativeId == coopId)
                     .FirstOrDefault<Plant>();
         }
 

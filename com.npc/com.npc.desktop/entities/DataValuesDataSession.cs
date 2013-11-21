@@ -13,6 +13,12 @@ namespace com.npc.desktop.entities
                     .Where(dv => dv.plantId == plant.plantId)
                     .Where(dv => dv.dataTypeId == dataType.dataTypeId)
                     .SingleOrDefault<DataValues>();
-        }  
+        }
+
+        public List<DataValues> findDataValuesByPlant(Plant plant) {
+            return (List<DataValues>)Dbase.getCurrentInstance().dataValues
+                        .Where(dv => dv.plantId == plant.plantId)
+                        .ToList<DataValues>();
+        }
     }
 }

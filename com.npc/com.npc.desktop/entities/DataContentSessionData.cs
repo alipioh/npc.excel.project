@@ -13,5 +13,11 @@ namespace com.npc.desktop.entities
                  .Database
                  .ExecuteSqlCommand("DELETE FROM " + DataContent.ENTITY_NAME + " WHERE dataValuesId=" + dataValueId);
         }
+
+        public List<DataContent> findDataContentByDataValuesId(DataValues dataValue) {
+            return (List<DataContent>)Dbase.getCurrentInstance().dataContents
+                    .Where(dc => dc.dataValuesId == dataValue.dataValuesId)
+                    .ToList<DataContent>();
+        }
     }
 }
