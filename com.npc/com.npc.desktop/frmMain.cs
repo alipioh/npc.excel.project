@@ -308,6 +308,7 @@ namespace com.npc.desktop
 
         private void button8_Click(object sender, EventArgs e)
         {
+            //testing for changes
             foreach (Regions region in regionSessionData.getAllRegions()) {
                 foreach (Cooperative coop in cooperativeSessionData.getCooperativeByRegion(region.regionId))
                 {
@@ -332,11 +333,8 @@ namespace com.npc.desktop
                         }
                     }
                 }
-            }
-            
-            
+            } 
         }
-
     }
 }
 
