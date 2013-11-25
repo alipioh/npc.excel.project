@@ -86,16 +86,15 @@ namespace com.npc.desktop
                 try
                 {
                     ExcelUtil excel = new ExcelUtil();
-            
                     excel.Open(demand.Path + "/" + demand.FileName);
                     excel.Worksheet(demand.WorkSheet);
 
                     Object[,] obj = excel.ReadCellByRange(demand.RowRangeFrom + ":" + demand.RowRangeTo);
-                    for (int outer = 1; outer <= obj.GetUpperBound(0); outer++)
+                    for (int row = 1; row <= obj.GetUpperBound(0); row++)
                     {
-                        for (int inner = 1; inner <= obj.GetUpperBound(1); inner++)
+                        for (int column = 1; column <= obj.GetUpperBound(1); column++)
                         {
-                            Console.WriteLine(numUtil.getLetterByNumber(inner) + outer + " = " + obj[outer, inner]);
+                            Console.WriteLine(numUtil.getLetterByNumber(column) + "[" + numUtil.getNumberByLetter(numUtil.getLetterByNumber(column)) + "]" + row + " = " + obj[row, column]);
                         }
                     }
                     excel.Close();
@@ -213,7 +212,67 @@ namespace com.npc.desktop
 
             if (demand.RowSequenceType == RowSequenceType.Range)
             {
-                
+                try
+                {
+                    String firstLetter = demand.RowRangeFrom.ElementAt(0).ToString();
+
+                    ExcelUtil excel = new ExcelUtil();
+
+                    excel.Open(demand.Path + "/" + demand.FileName);
+                    excel.Worksheet(demand.WorkSheet);
+
+                    Object[,] obj = excel.ReadCellByRange(demand.RowRangeFrom + ":" + demand.RowRangeTo);
+                    for (int row = 1; row <= obj.GetUpperBound(0); row++)
+                    {
+                        int numberGap = Int32.Parse(numUtil.getNumberByLetter(firstLetter));
+
+                        //Area area = new Area(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.AreaColumn)) - numberGap + 1].ToString());
+                        Area area = new Area("Luzon");
+                        area = (Area)areaSessionData.createIfNotExist(area);
+
+                        Regions region = new Regions(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.RegionColumn)) - numberGap + 1].ToString(), area.areaId);
+                        region = (Regions)regionSessionData.createIfNotExist(region);
+
+                        Cooperative cooperative = new Cooperative(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.CooperativeColumn)) - numberGap + 1].ToString(), "", region.regionId);
+                        cooperative = (Cooperative)cooperativeSessionData.createIfNotExist(cooperative);
+
+                        Plant plant = new Plant(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PlantColumn)) - numberGap + 1].ToString(), cooperative.cooperativeId);
+                        plant = (Plant)plantSessionData.createIfNotExist(plant);
+
+                        DataType dataType = new DataType(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PscEcsKeywordColumn)) - numberGap + 1].ToString());
+                        dataType = (DataType)dataTypeSessionData.createIfNotExist(dataType);
+
+                        DataValues dataValue = new DataValues(plant.plantId, dataType.dataTypeId);
+                        dataValue = (DataValues)dataValuesSessionData.createIfNotExist(dataValue);
+
+                        foreach(PscEcsData ecsData in demand.PscEcsData){
+                            DataContent dataContent = new DataContent(ecsData.Name, obj[row,Int32.Parse(numUtil.getNumberByLetter(ecsData.Column)) - numberGap + 1].ToString(), dataValue.dataValuesId);
+                            dataContentSessionData.add(dataContent);    
+                        }
+
+                        //Console.WriteLine("Area " + area.name);
+                        //Console.WriteLine("Region " + region.name);
+
+                        //for (int column = 1; column <= obj.GetUpperBound(1); column++)
+                        //{
+
+                        //    Console.WriteLine(numUtil.getLetterByNumber(numberGap) + "[" + numberGap.ToString() + "]" + row + " = " + obj[row, column]);
+                        //    numberGap++;
+                        //}
+                    }
+                    excel.Close();
+                }
+                catch (WorksheetNotFoundException wnfe)
+                {
+                    MessageBox.Show(null, wnfe.Message, "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (RangeInvalidException rie)
+                {
+                    MessageBox.Show(null, rie.Message, "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (IndexOutOfRangeException iore) {
+                    MessageBox.Show(null, "Index not in a range.", "Error Window", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else if (demand.RowSequenceType == RowSequenceType.Collection)
             {

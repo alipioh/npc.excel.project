@@ -12,6 +12,20 @@ namespace com.npc.desktop.entities
     class DataContent
     {
         public static String ENTITY_NAME = "npcDataContent";
+
+        #region CONSTRUCTOR
+        public DataContent() { 
+        
+        }
+
+        public DataContent(String header, String value, Int32 dataValueId)
+        {
+            this.value = value;
+            this.header = header;
+            this.dataValuesId = dataValueId;
+        }
+        #endregion
+
         #region FIELDS
         [Key]
         public Int32 dataContentId { get; set; }

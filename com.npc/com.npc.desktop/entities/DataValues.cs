@@ -28,6 +28,11 @@ namespace com.npc.desktop.entities
             this.dataTypeId = dataTypeId;
         }
 
+        public DataValues(Int32 plantId, Int32 dataTypeId) : base(){
+            this.plantId = plantId;
+            this.dataTypeId = dataTypeId;
+        }
+
         #region ENCAPSULATION METHOD / ACCESSOR & MUTATOR METHODS
         [Key]
         public Int32 dataValuesId { get; set; }
