@@ -15,6 +15,15 @@ namespace com.npc.desktop.entities
         /// <param name="region"></param>
         /// <returns></returns>
 
+        public Hashtable getAllRegionsByHashtable(){
+          Hashtable hashAllRegion = new Hashtable();
+          foreach (Regions region in getAllRegions()) {
+              hashAllRegion.Add(region.name, region);
+          }
+
+          return hashAllRegion;
+        }
+
         public Regions getRegionByArea(Int32 areaId) {
             return Dbase.getCurrentInstance().regions
                     .Where(r => r.area.areaId == areaId)

@@ -224,6 +224,14 @@ namespace com.npc.desktop
                     Object[,] obj = excel.ReadCellByRange(demand.RowRangeFrom + ":" + demand.RowRangeTo);
                     for (int row = 1; row <= obj.GetUpperBound(0); row++)
                     {
+                        //for (int col = 1; col <= obj.GetUpperBound(1); col++) {
+                        //    if (obj[row, col] == null) {
+                        //        Console.WriteLine("NUl");
+                        //        continue;
+                        //    }
+
+                        //    Console.WriteLine(obj[row, col].ToString());
+                        //}
                         int numberGap = Int32.Parse(numUtil.getNumberByLetter(firstLetter));
 
                         //Area area = new Area(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.AreaColumn)) - numberGap + 1].ToString());
@@ -236,8 +244,17 @@ namespace com.npc.desktop
                         Cooperative cooperative = new Cooperative(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.CooperativeColumn)) - numberGap + 1].ToString(), "", region.regionId);
                         cooperative = (Cooperative)cooperativeSessionData.createIfNotExist(cooperative);
 
+                        if (obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PlantColumn)) - numberGap + 1] == null)
+                        {
+                            continue;
+                        }
+
                         Plant plant = new Plant(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PlantColumn)) - numberGap + 1].ToString(), cooperative.cooperativeId);
                         plant = (Plant)plantSessionData.createIfNotExist(plant);
+
+                        if (plant == null) continue;
+
+                        Console.WriteLine(Int32.Parse(numUtil.getNumberByLetter(demand.PscEcsKeywordColumn)).ToString());
 
                         DataType dataType = new DataType(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PscEcsKeywordColumn)) - numberGap + 1].ToString());
                         dataType = (DataType)dataTypeSessionData.createIfNotExist(dataType);
@@ -245,20 +262,19 @@ namespace com.npc.desktop
                         DataValues dataValue = new DataValues(plant.plantId, dataType.dataTypeId);
                         dataValue = (DataValues)dataValuesSessionData.createIfNotExist(dataValue);
 
-                        foreach(PscEcsData ecsData in demand.PscEcsData){
-                            DataContent dataContent = new DataContent(ecsData.Name, obj[row,Int32.Parse(numUtil.getNumberByLetter(ecsData.Column)) - numberGap + 1].ToString(), dataValue.dataValuesId);
-                            dataContentSessionData.add(dataContent);    
+                        foreach (PscEcsData ecsData in demand.PscEcsData)
+                        {
+                            object dataObect = obj[row, Int32.Parse(numUtil.getNumberByLetter(ecsData.Column)) - numberGap + 1];
+                            String data = "0";
+
+                            if (dataObect != null) {
+                                data = dataObect.ToString();
+                            }
+
+                            DataContent dataContent = new DataContent(ecsData.Name,data, dataValue.dataValuesId);
+                            dataContentSessionData.add(dataContent);
                         }
-
-                        //Console.WriteLine("Area " + area.name);
-                        //Console.WriteLine("Region " + region.name);
-
-                        //for (int column = 1; column <= obj.GetUpperBound(1); column++)
-                        //{
-
-                        //    Console.WriteLine(numUtil.getLetterByNumber(numberGap) + "[" + numberGap.ToString() + "]" + row + " = " + obj[row, column]);
-                        //    numberGap++;
-                        //}
+                        
                     }
                     excel.Close();
                 }
@@ -306,8 +322,6 @@ namespace com.npc.desktop
                             dataType = (DataType)dataTypeSessionData.createIfNotExist(dataType);
                             Console.WriteLine("data: " + dataType.dataTypeId);
                             
-
-
                             Area area = new Area("Luzon");
                             area = (Area)areaSessionData.createIfNotExist(area);
 

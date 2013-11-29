@@ -10,6 +10,23 @@ namespace com.npc.desktop.entities
     [Serializable]
     class PlantDataSession : BaseSession
     {
+
+        public Hashtable getAllPlantByHashtable() {
+            Hashtable hashAllPlant = new Hashtable();
+            foreach (Plant plant in getAllPlant()) {
+                hashAllPlant.Add(plant.name, plant);
+            }
+
+            return hashAllPlant;
+        }
+
+        public Plant getPlantByNameAndCooperative(Plant plant) {
+            return Dbase.getCurrentInstance().plants
+                .Where(p => p.name == plant.name)
+                .Where(p => p.cooperativeId == plant.cooperativeId)
+               .FirstOrDefault<Plant>();
+        }
+
         public Plant getPlantByName(String plantName){
             Plant plant = new Plant();
             plant.name = plantName;

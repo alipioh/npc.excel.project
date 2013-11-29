@@ -45,6 +45,16 @@ namespace com.npc.desktop.entities
                     .ToList<Area>();
         }
 
+        public Hashtable getAllAreasByHashtable() {
+            Hashtable hashAllArea = new Hashtable();
+
+            foreach (Area area in getAllAreas()) {
+                hashAllArea.Add(area.name, area);
+            }
+
+            return hashAllArea;
+        }
+
         public Area getAreaByName(String areaName)
         {
             Area area = new Area();

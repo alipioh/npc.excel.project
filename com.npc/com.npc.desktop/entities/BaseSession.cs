@@ -55,14 +55,18 @@ namespace com.npc.desktop.entities
             }
             else if (obj.GetType() == typeof(Cooperative))
             {
+                Cooperative cooperative = (Cooperative) obj;
+
                 cooperativeSessionData = new CooperativeSessionData();
-                Cooperative coop = cooperativeSessionData.getCooperativeByName((Cooperative)obj);
+                Cooperative coop = cooperativeSessionData.getCooperativeByNameAndRegionId(cooperative, cooperative.regionId);
                 resultObj = coop;
             }
             else if (obj.GetType() == typeof(Plant))
             {
+                Plant planta = (Plant)obj;
+
                 plantSessionData = new PlantDataSession();
-                Plant plant = plantSessionData.getPlantByName((Plant)obj);
+                Plant plant = plantSessionData.getPlantByNameAndCooperative(planta); // plantSessionData.getPlantByName((Plant)obj);
                 resultObj = plant;
             }
             else if (obj.GetType() == typeof(Regions))
