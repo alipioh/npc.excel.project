@@ -19,4 +19,3 @@ C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debu
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csproj.GenerateResource.Cache
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.exe
 C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.pdb
-C:\Users\alipioh\Source\Repos\npc.excel.project\com.npc\com.npc.desktop\obj\Debug\com.npc.desktop.csprojResolveAssemblyReference.cache

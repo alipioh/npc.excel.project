@@ -105,7 +105,7 @@ namespace com.npc.desktop.entities
             }
             else if (obj.GetType() == typeof(Plant)) {
                 plantSessionData = new PlantDataSession();
-                Plant plant = plantSessionData.getPlantByName((Plant)obj);
+                Plant plant = plantSessionData.getPlantByNameAndCooperative((Plant)obj);
                 exist = (plant != null) ? true : false;
             }
             else if (obj.GetType() == typeof(Regions)) {

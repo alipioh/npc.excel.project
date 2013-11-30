@@ -22,9 +22,8 @@ namespace com.npc.desktop.entities
 
         public Plant getPlantByNameAndCooperative(Plant plant) {
             return Dbase.getCurrentInstance().plants
-                .Where(p => p.name == plant.name)
-                .Where(p => p.cooperativeId == plant.cooperativeId)
-               .FirstOrDefault<Plant>();
+                .Where(p => p.name == plant.name && p.cooperativeId == plant.cooperativeId)
+                .FirstOrDefault<Plant>();
         }
 
         public Plant getPlantByName(String plantName){

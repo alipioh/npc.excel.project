@@ -207,7 +207,22 @@ namespace com.npc.desktop
         {
             Demand demand = (Demand)propertyGrid.SelectedObject;
             NumberToLetterUtil converter = new NumberToLetterUtil();
-
+            demand.PscEcsData.Clear();
+            demand.PscEcsData.Add(new PscEcsData() { Name="2008", Column="J"});
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2009", Column = "K" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2010", Column = "L" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2011", Column = "M" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2012", Column = "N" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2013", Column = "O" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2014", Column = "P" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2015", Column = "Q" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2016", Column = "R" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2017", Column = "S" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2018", Column = "T" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2019", Column = "U" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2020", Column = "V" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2021", Column = "W" });
+            demand.PscEcsData.Add(new PscEcsData() { Name = "2022", Column = "X" });
             NumberToLetterUtil numUtil = new NumberToLetterUtil();
 
             if (demand.RowSequenceType == RowSequenceType.Range)
@@ -244,17 +259,15 @@ namespace com.npc.desktop
                         Cooperative cooperative = new Cooperative(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.CooperativeColumn)) - numberGap + 1].ToString(), "", region.regionId);
                         cooperative = (Cooperative)cooperativeSessionData.createIfNotExist(cooperative);
 
-                        if (obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PlantColumn)) - numberGap + 1] == null)
-                        {
-                            continue;
-                        }
-
+                       
+                        if(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PlantColumn)) - numberGap + 1] == null) continue; 
                         Plant plant = new Plant(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PlantColumn)) - numberGap + 1].ToString(), cooperative.cooperativeId);
                         plant = (Plant)plantSessionData.createIfNotExist(plant);
+                        //plant = (Plant)plantSessionData.add(plant);
 
-                        if (plant == null) continue;
+                        //if (plant == null) continue;
 
-                        Console.WriteLine(Int32.Parse(numUtil.getNumberByLetter(demand.PscEcsKeywordColumn)).ToString());
+                        Console.WriteLine("Plant: " + plant.plantId);
 
                         DataType dataType = new DataType(obj[row, Int32.Parse(numUtil.getNumberByLetter(demand.PscEcsKeywordColumn)) - numberGap + 1].ToString());
                         dataType = (DataType)dataTypeSessionData.createIfNotExist(dataType);
@@ -381,11 +394,14 @@ namespace com.npc.desktop
 
         private void button8_Click(object sender, EventArgs e)
         {
+            
             //testing for changes
-            foreach (Regions region in regionSessionData.getAllRegions()) {
+            foreach (Regions region in regionSessionData.getAllRegions())
+            {
                 foreach (Cooperative coop in cooperativeSessionData.getCooperativeByRegion(region.regionId))
                 {
-                    foreach (Plant plant in plantSessionData.getAllPlantByCoop(coop.cooperativeId)) {
+                    foreach (Plant plant in plantSessionData.getAllPlantByCoop(coop.cooperativeId))
+                    {
                         if (plant == null) continue;
 
                         Console.WriteLine("Cooperative: " + plant.name);
@@ -395,16 +411,18 @@ namespace com.npc.desktop
                             Console.WriteLine("Id: " + dataValue.dataValuesId);
                             foreach (DataContent dataContent in dataContentSessionData.findDataContentByDataValuesId(dataValue))
                             {
-                                Console.WriteLine("Plant Content: " + dataContent.header);
+                                Console.WriteLine("Plant Content: " + dataContent.header + " = " + dataContent.value);
                             }
                         }
                     }
-                   
-                    foreach (CooperativeDataValues cooperativeDataValue in cooperativeDataValueSessionData.findDataValuesByCooperativeId(coop)) {
-                        foreach (CooperativeDataContent coopDataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(cooperativeDataValue)) {
-                            Console.WriteLine("Coop Content: " + coopDataContent.value);
-                        }
-                    }
+
+                    //foreach (CooperativeDataValues cooperativeDataValue in cooperativeDataValueSessionData.findDataValuesByCooperativeId(coop))
+                    //{
+                    //    foreach (CooperativeDataContent coopDataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(cooperativeDataValue))
+                    //    {
+                    //        Console.WriteLine("Coop Content: " + coopDataContent.value);
+                    //    }
+                    //}
                 }
             } 
         }
