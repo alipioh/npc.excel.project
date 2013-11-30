@@ -72,6 +72,7 @@ namespace com.npc.desktop.entities
         public IList<Plant> getAllPlantByCoop(Int32 coopId) {
             return Dbase.getCurrentInstance().plants
                 .Where(p => p.cooperativeId == coopId)
+                .Include(p => p.dataValues)
                 .ToList<Plant>();
         }
 

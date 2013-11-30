@@ -22,6 +22,7 @@ namespace com.npc.desktop.entities
         public List<Cooperative> getCooperativeByRegion(Int32 regionId) {
             return Dbase.getCurrentInstance().cooperatives
                     .Include(c => c.plants)
+                    .Include(c => c.cooperativeDataValues)
                     .Where(c => c.regionId == regionId)
                     .ToList<Cooperative>();
         }

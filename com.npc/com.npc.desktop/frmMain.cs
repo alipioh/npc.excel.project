@@ -36,7 +36,8 @@ namespace com.npc.desktop
         private CooperativeDataContent cooperativeDataContent = new CooperativeDataContent();
 
         private ExcelUtil excel;
-            
+        private NumberToLetterUtil numUtil = new NumberToLetterUtil();
+
         public frmMain()
         {
             InitializeComponent();
@@ -392,39 +393,94 @@ namespace com.npc.desktop
             Console.WriteLine(demand.Region);
         }
 
+        private Int32 row;
         private void button8_Click(object sender, EventArgs e)
         {
+            excel = new ExcelUtil();
+            excel.AddWorkbook();
+            excel.Worksheet("Sheet1");
             
+
             //testing for changes
+            row = 1;
             foreach (Regions region in regionSessionData.getAllRegions())
             {
-                foreach (Cooperative coop in cooperativeSessionData.getCooperativeByRegion(region.regionId))
+               foreach (Cooperative coop in cooperativeSessionData.getCooperativeByRegion(region.regionId))
                 {
-                    foreach (Plant plant in plantSessionData.getAllPlantByCoop(coop.cooperativeId))
+                    row+= 2;
+
+                    excel.WriteCell(row, 2, region.name);
+                    excel.WriteCell(row, 3, coop.name);
+                    row++;
+                    
+
+
+                    IList<Plant> plants = plantSessionData.getAllPlantByCoop(coop.cooperativeId);
+
+                    excel.WriteCell(row, 2, region.name);
+                    excel.WriteCell(row, 3, "PSA");
+                    int PSARow = row;
+                    
+                    row++;
+
+                    Console.WriteLine(plants.Count.ToString());
+                    foreach (Plant plant in plants)
                     {
                         if (plant == null) continue;
 
-                        Console.WriteLine("Cooperative: " + plant.name);
+                        excel.WriteCell(row, 2,region.name /*region.name*/);
+                        excel.WriteCell(row, 3, plant.name);
 
-                        foreach (DataValues dataValue in dataValuesSessionData.findDataValuesByPlant(plant))
+                        int col = 3;
+                        foreach (DataValues dataValue in plant.dataValues)
                         {
-                            Console.WriteLine("Id: " + dataValue.dataValuesId);
+                            col++;
+                            excel.WriteCell(row, 2, region.name);
+
                             foreach (DataContent dataContent in dataContentSessionData.findDataContentByDataValuesId(dataValue))
                             {
-                                Console.WriteLine("Plant Content: " + dataContent.header + " = " + dataContent.value);
-                            }
-                        }
-                    }
+                                //SUMMATION OF PSA
+                                excel.WriteCell(PSARow, col, "=sum(" + numUtil.getLetterByNumber(col) + (PSARow + 1) + ":" + numUtil.getLetterByNumber(col) + (PSARow + plants.Count) + ")");
 
-                    //foreach (CooperativeDataValues cooperativeDataValue in cooperativeDataValueSessionData.findDataValuesByCooperativeId(coop))
-                    //{
-                    //    foreach (CooperativeDataContent coopDataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(cooperativeDataValue))
-                    //    {
-                    //        Console.WriteLine("Coop Content: " + coopDataContent.value);
-                    //    }
-                    //}
+                                excel.WriteCell(row, col, dataContent.value);
+                                col += 2;
+                            }
+
+                            col = 4;
+                        }
+
+                        row++;
+
+                        col = 3;
+                        excel.WriteCell(row, 2, region.name);
+                        excel.WriteCell(row, 3, "DEMAND");
+                        excel.WriteCell(row + 1, 2, region.name);
+                        excel.WriteCell(row + 1, 3, "RESERVE / DEFICIT");
+
+                        foreach (CooperativeDataValues dataValue in coop.cooperativeDataValues)
+                        {
+                            col++;
+                            foreach (CooperativeDataContent dataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(dataValue))
+                            {
+                                excel.WriteCell(row, col, dataContent.value);
+                                excel.WriteCell(row + 1, col, "=" + numUtil.getLetterByNumber(col) + PSARow + "-" + numUtil.getLetterByNumber(col) + row);
+                                col += 2;
+                            }
+                            col = 4;
+                        }
+
+                        row++;
+                    }
                 }
-            } 
+            }
+
+            excel.Save("test1.xls");
+            Console.WriteLine("Save!");
+
+        }
+
+        private void generatePSA(IList<Plant> plants) {
+            
         }
     }
 }

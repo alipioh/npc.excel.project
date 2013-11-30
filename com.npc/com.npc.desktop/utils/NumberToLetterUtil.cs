@@ -24,7 +24,20 @@ namespace com.npc.desktop.utils
         }
 
         public String getLetterByNumber(Int32 occurence) {
-            return numberTable[occurence].ToString();
+            String letter = null;
+
+            if (occurence > 26)
+            {
+                int firstDigit = (int)(occurence / 26);
+                int secondDigit = (int)(occurence % 26);
+                letter = numberTable[firstDigit].ToString();
+                letter += numberTable[secondDigit].ToString();
+            }
+            else {
+                letter = numberTable[occurence].ToString();
+            }
+            return letter;
+            //return numberTable[occurence].ToString();
         }
 
         public String getNumberByLetter(String letter) {
