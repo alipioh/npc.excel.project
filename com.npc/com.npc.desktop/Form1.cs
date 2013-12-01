@@ -298,5 +298,16 @@ namespace com.npc.desktop
             //    Console.WriteLine(exc.ReadCell("A" + cntr.ToString()));
             //}
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            List<Int32> list = new List<Int32>();
+            list.Add(32);
+            list.Add(25);
+            list.Add(11);
+
+            Console.WriteLine(String.Join(",", list.ToArray()));
+
+        }
     }
 }

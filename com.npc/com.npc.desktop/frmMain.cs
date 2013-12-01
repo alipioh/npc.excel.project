@@ -38,6 +38,13 @@ namespace com.npc.desktop
         private ExcelUtil excel;
         private NumberToLetterUtil numUtil = new NumberToLetterUtil();
 
+        private List<Int32> psaLuzonMark = new List<Int32>();
+        private List<Int32> psaVisayasMark = new List<Int32>();
+        private List<Int32> psaMindanaoMark = new List<Int32>();
+
+        private List<Int32> demandLuzonMark = new List<Int32>();
+        private List<Int32> demandVisayasMark = new List<Int32>();
+        private List<Int32> demandMindanaoMark = new List<Int32>();
         public frmMain()
         {
             InitializeComponent();
@@ -399,10 +406,11 @@ namespace com.npc.desktop
             excel = new ExcelUtil();
             excel.AddWorkbook();
             excel.Worksheet("Sheet1");
+
             
 
             //testing for changes
-            row = 1;
+            row = 3;
             foreach (Regions region in regionSessionData.getAllRegions())
             {
                foreach (Cooperative coop in cooperativeSessionData.getCooperativeByRegion(region.regionId))
@@ -420,68 +428,121 @@ namespace com.npc.desktop
                     excel.WriteCell(row, 2, region.name);
                     excel.WriteCell(row, 3, "PSA");
                     int PSARow = row;
+
+                    Area area = areaSessionData.getAreaById(region.areaId);
+                    if (area != null) {
+                        if (area.name.Equals("Luzon"))
+                        {
+                            psaLuzonMark.Add(row);
+                        }
+                        else if (area.name.Equals("Visayas"))
+                        {
+                            psaVisayasMark.Add(row);
+                        }
+                        else if (area.name.Equals("Mindanao"))
+                        {
+                            psaMindanaoMark.Add(row);
+                        }
+                    } 
+                    
                     
                     row++;
-
+                    int col;
                     Console.WriteLine(plants.Count.ToString());
                     foreach (Plant plant in plants)
                     {
-                        if (plant == null) continue;
+                        if (plant != null) {
+                            excel.WriteCell(row, 2, region.name /*region.name*/);
+                            excel.WriteCell(row, 3, plant.name);
 
-                        excel.WriteCell(row, 2,region.name /*region.name*/);
-                        excel.WriteCell(row, 3, plant.name);
-
-                        int col = 3;
-                        foreach (DataValues dataValue in plant.dataValues)
-                        {
-                            col++;
-                            excel.WriteCell(row, 2, region.name);
-
-                            foreach (DataContent dataContent in dataContentSessionData.findDataContentByDataValuesId(dataValue))
+                            col = 3;
+                            foreach (DataValues dataValue in plant.dataValues)
                             {
-                                //SUMMATION OF PSA
-                                excel.WriteCell(PSARow, col, "=sum(" + numUtil.getLetterByNumber(col) + (PSARow + 1) + ":" + numUtil.getLetterByNumber(col) + (PSARow + plants.Count) + ")");
+                                col++;
+                                excel.WriteCell(row, 2, region.name);
 
-                                excel.WriteCell(row, col, dataContent.value);
-                                col += 2;
+                                foreach (DataContent dataContent in dataContentSessionData.findDataContentByDataValuesId(dataValue))
+                                {
+                                    //SUMMATION OF PSA
+                                    excel.WriteCell(PSARow, col, "=sum(" + numUtil.getLetterByNumber(col) + (PSARow + 1) + ":" + numUtil.getLetterByNumber(col) + (PSARow + plants.Count) + ")");
+
+                                    excel.WriteCell(row, col, dataContent.value);
+                                    col += 2;
+                                }
+
+                                col = 4;
                             }
 
-                            col = 4;
+                            row++;
                         }
-
-                        row++;
-
-                        col = 3;
-                        excel.WriteCell(row, 2, region.name);
-                        excel.WriteCell(row, 3, "DEMAND");
-                        excel.WriteCell(row + 1, 2, region.name);
-                        excel.WriteCell(row + 1, 3, "RESERVE / DEFICIT");
-
-                        foreach (CooperativeDataValues dataValue in coop.cooperativeDataValues)
-                        {
-                            col++;
-                            foreach (CooperativeDataContent dataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(dataValue))
-                            {
-                                excel.WriteCell(row, col, dataContent.value);
-                                excel.WriteCell(row + 1, col, "=" + numUtil.getLetterByNumber(col) + PSARow + "-" + numUtil.getLetterByNumber(col) + row);
-                                col += 2;
-                            }
-                            col = 4;
-                        }
-
-                        row++;
+                        
+                         
                     }
+
+                    col = 3;
+                    excel.WriteCell(row, 2, region.name);
+                    excel.WriteCell(row, 3, "DEMAND");
+                    if (area != null)
+                    {
+                        if (area.name.Equals("Luzon"))
+                        {
+                            demandLuzonMark.Add(row);
+                        }
+                        else if (area.name.Equals("Mindanao"))
+                        {
+                            demandMindanaoMark.Add(row);
+                        }
+                        else if (area.name.Equals("Visayas"))
+                        {
+                            demandVisayasMark.Add(row);
+                        }
+                    }
+                    
+
+
+                    excel.WriteCell(row + 1, 2, region.name);
+                    excel.WriteCell(row + 1, 3, "RESERVE / DEFICIT");
+
+                    foreach (CooperativeDataValues dataValue in coop.cooperativeDataValues)
+                    {
+                        col++;
+                        foreach (CooperativeDataContent dataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(dataValue))
+                        {
+                            excel.WriteCell(row, col, dataContent.value);
+                            excel.WriteCell(row + 1, col, "=" + numUtil.getLetterByNumber(col) + PSARow + "-" + numUtil.getLetterByNumber(col) + row);
+                            col += 2;
+                        }
+                        col = 4;
+                    }
+
+                    row++;
                 }
             }
+
+            excel.filter("A3" , "X" + row.ToString());
+            summary("Luzon", psaLuzonMark, demandLuzonMark, row + 4);
+            summary("Visayas", psaVisayasMark, demandVisayasMark, row + 9);
+            summary("Mindanao", psaMindanaoMark, demandMindanaoMark, row + 14);
 
             excel.Save("test1.xls");
             Console.WriteLine("Save!");
 
         }
 
+        private void summary(String summaryArea,List<Int32> psaRowMarks, List<Int32> demandRowMarks, Int32 startingRow) {
+            excel.WriteCell(startingRow, 2, summaryArea);
+            excel.WriteCell(startingRow, 3, "PSA");
+            excel.WriteCell(startingRow, 4, ("=SUBTOTAL(9, " + String.Join(",", psaRowMarks.ToArray()) + ")").Replace(",",",D").Replace(" ", ""));
+          
+            excel.WriteCell(startingRow + 1, 3, "DEMAND");
+            excel.WriteCell(startingRow + 1, 4, ("=SUBTOTAL(9, " + String.Join(",", demandRowMarks.ToArray()) + ")").Replace(",", ",D").Replace(" ", "")); 
+            excel.WriteCell(startingRow + 2, 3, "RESERVE / DEFICIT");
+        }
+        
         private void generatePSA(IList<Plant> plants) {
             
         }
     }
 }
+
 

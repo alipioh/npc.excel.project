@@ -16,6 +16,13 @@ namespace com.npc.desktop.entities
     class AreaSessionData : BaseSession
     {
 
+        public Area getAreaById(Int32 areaId) {
+            return Dbase.getCurrentInstance().areas
+                    .Where(a => a.areaId == areaId)
+                    .SingleOrDefault<Area>();
+
+        }
+
         public IList<Area> getAllRegionsByArea(String area)
         {
             try
@@ -44,6 +51,8 @@ namespace com.npc.desktop.entities
                     .Include(a => a.regions)   
                     .ToList<Area>();
         }
+
+       
 
         public Hashtable getAllAreasByHashtable() {
             Hashtable hashAllArea = new Hashtable();

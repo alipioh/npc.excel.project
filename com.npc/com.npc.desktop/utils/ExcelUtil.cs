@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using com.npc.desktop.exceptions;
+using Microsoft.Office.Interop.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace com.npc.desktop.utils
@@ -55,6 +56,8 @@ namespace com.npc.desktop.utils
         public static Excel.Application getCurrentInstance() {
             return new Excel.Application();
         }
+
+        
 
         public void AddWorkbook() {
             workBook = application.Workbooks.Add(misValue);
@@ -130,6 +133,15 @@ namespace com.npc.desktop.utils
             {
                 GC.Collect();
             }
+        }
+        #endregion
+
+        #region FILTER
+        public void filter(String rangeFrom, String rangeTo)
+        {
+            workSheet.EnableAutoFilter = true;
+            Excel.Range ranges = workSheet.get_Range(rangeFrom, rangeTo);
+            ranges.AutoFilter("1", "<>", Microsoft.Office.Interop.Excel.XlAutoFilterOperator.xlOr, "", true);
         }
         #endregion
     }
