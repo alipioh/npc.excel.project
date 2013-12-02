@@ -31,8 +31,9 @@
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.button1 = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtOutput = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button8 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pnlPSA = new System.Windows.Forms.Panel();
             this.button6 = new System.Windows.Forms.Button();
@@ -48,7 +49,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.button8 = new System.Windows.Forms.Button();
+            this.loadingBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -85,7 +86,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.textBox3);
+            this.splitContainer1.Panel1.Controls.Add(this.txtOutput);
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
             // 
             // splitContainer1.Panel2
@@ -95,18 +96,19 @@
             this.splitContainer1.SplitterDistance = 655;
             this.splitContainer1.TabIndex = 2;
             // 
-            // textBox3
+            // txtOutput
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Location = new System.Drawing.Point(0, 73);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(655, 200);
-            this.textBox3.TabIndex = 4;
+            this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtOutput.Location = new System.Drawing.Point(0, 73);
+            this.txtOutput.Multiline = true;
+            this.txtOutput.Name = "txtOutput";
+            this.txtOutput.Size = new System.Drawing.Size(655, 200);
+            this.txtOutput.TabIndex = 4;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.loadingBar);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.button1);
@@ -116,6 +118,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(655, 73);
             this.panel1.TabIndex = 3;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(301, 3);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 5;
+            this.button8.Text = "Query";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // panel2
             // 
@@ -249,15 +261,12 @@
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
-            // button8
+            // loadingBar
             // 
-            this.button8.Location = new System.Drawing.Point(301, 3);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 5;
-            this.button8.Text = "Query";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.loadingBar.Location = new System.Drawing.Point(380, 5);
+            this.loadingBar.Name = "loadingBar";
+            this.loadingBar.Size = new System.Drawing.Size(152, 20);
+            this.loadingBar.TabIndex = 6;
             // 
             // frmMain
             // 
@@ -299,12 +308,13 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox txtDemand;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtOutput;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.ProgressBar loadingBar;
     }
 }

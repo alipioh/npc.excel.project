@@ -123,6 +123,12 @@ namespace com.npc.desktop.entities
             return getRegionByName(Regions._CARAGA);
         }
 
+        public List<Regions> getAllRegionsByArea(Area area){
+            return (List<Regions>) Dbase.getCurrentInstance().regions
+                    .Where(r => r.areaId == area.areaId)
+                    .ToList<Regions>();
+        }
+
         public IList<Regions> getAllRegionsInLuzon()
         {
             return (IList<Regions>)new AreaSessionData().getAllRegionsByLuzonArea()[0].regions;

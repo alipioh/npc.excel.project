@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -94,7 +95,7 @@ namespace com.npc.desktop.utils
                     Path = fileName;
                 }
                  
-                workSheet.SaveAs(Path);
+                workSheet.SaveAs(Path, XlFileFormat.xlExcel12);
                 Close();
             }
             catch (Exception ex) {
@@ -142,6 +143,26 @@ namespace com.npc.desktop.utils
             workSheet.EnableAutoFilter = true;
             Excel.Range ranges = workSheet.get_Range(rangeFrom, rangeTo);
             ranges.AutoFilter("1", "<>", Microsoft.Office.Interop.Excel.XlAutoFilterOperator.xlOr, "", true);
+        }
+
+        public void copy(String copyRange, String copyTo) {
+            workSheet.Range[copyRange].Select();
+            workSheet.Range[copyRange].Copy();
+            workSheet.Range[copyTo].Select();
+            workSheet.Paste();
+        }
+
+        public String getLastColumn() {
+            NumberToLetterUtil numUtil = new NumberToLetterUtil();
+            return numUtil.getLetterByNumber(workSheet.Cells[1, workSheet.Columns.Count].End(XlDirection.xlToLeft).Column);
+        }
+
+        public Int32 getLastRow() {
+            return workSheet.Cells[1, workSheet.Rows.Count].End(XlDirection.xlUp).Rows;
+        }
+
+        public void setBackgroundColor(String range, Color color) {
+            workSheet.Range[range].Interior.Color = color;
         }
         #endregion
     }

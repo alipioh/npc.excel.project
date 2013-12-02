@@ -122,6 +122,7 @@
     <Compile Include="pro\RowSequenceCollection.cs" />
     <Compile Include="pro\RowSequenceRange.cs" />
     <Compile Include="pro\DdpDemandData.cs" />
+    <Compile Include="utils\FileWriter.cs" />
     <Compile Include="utils\ExcelUtil.cs" />
     <Compile Include="utils\NumberToLetterUtil.cs" />
     <EmbeddedResource Include="Form1.resx">

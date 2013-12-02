@@ -19,5 +19,13 @@ namespace com.npc.desktop.entities
                     .Where(dc => dc.cooperativeDataValuesId == dataValue.cooperativeDataValuesId)
                     .ToList<CooperativeDataContent>();
         }
+
+        public List<string> findDataContentValueByDataValuesId(CooperativeDataValues dataValue)
+        {
+            return Dbase.getCurrentInstance().cooperativeDataContent
+                 .Where(d => d.cooperativeDataValuesId == dataValue.cooperativeDataValuesId)
+                 .Select(d => d.value)
+                 .ToList();
+        }
     }
 }

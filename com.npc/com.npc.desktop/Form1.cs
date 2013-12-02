@@ -301,13 +301,16 @@ namespace com.npc.desktop
 
         private void button5_Click(object sender, EventArgs e)
         {
-            List<Int32> list = new List<Int32>();
-            list.Add(32);
-            list.Add(25);
-            list.Add(11);
+            Console.WriteLine(Application.StartupPath.ToString());
+            ExcelUtil excel = new ExcelUtil();
+            
+            excel.Open(Application.StartupPath.ToString() + "\\testCSV.csv");
+            excel.Worksheet("testCSV");
+            excel.setBackgroundColor("A1:A5", Color.Red);
+            excel.WriteCell(1, 1, "Tet");
 
-            Console.WriteLine(String.Join(",", list.ToArray()));
-
+            excel.Save("newExcel.xls");
+            Console.WriteLine("Save");
         }
     }
 }

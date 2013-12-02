@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -407,140 +408,254 @@ namespace com.npc.desktop
             excel.AddWorkbook();
             excel.Worksheet("Sheet1");
 
-            
+            List<String> lstData = new List<String>();
+            StreamWriter writer = new StreamWriter("testCSV.csv",false);
+
+            List<String> luzonPSASummary = new List<String>();
+            List<String> luzonDemandSummary = new List<String>();
 
             //testing for changes
-            row = 3;
-            foreach (Regions region in regionSessionData.getAllRegions())
-            {
-               foreach (Cooperative coop in cooperativeSessionData.getCooperativeByRegion(region.regionId))
+            row = 0;
+            int areaCntr = 0;
+            IList<Area> areas = areaSessionData.getAllAreas();
+            foreach (Area area in areas) {
+                areaCntr++;
+                foreach (Regions region in regionSessionData.getAllRegionsByArea(area))
                 {
-                    row+= 2;
-
-                    excel.WriteCell(row, 2, region.name);
-                    excel.WriteCell(row, 3, coop.name);
-                    row++;
-                    
-
-
-                    IList<Plant> plants = plantSessionData.getAllPlantByCoop(coop.cooperativeId);
-
-                    excel.WriteCell(row, 2, region.name);
-                    excel.WriteCell(row, 3, "PSA");
-                    int PSARow = row;
-
-                    Area area = areaSessionData.getAreaById(region.areaId);
-                    if (area != null) {
-                        if (area.name.Equals("Luzon"))
-                        {
-                            psaLuzonMark.Add(row);
-                        }
-                        else if (area.name.Equals("Visayas"))
-                        {
-                            psaVisayasMark.Add(row);
-                        }
-                        else if (area.name.Equals("Mindanao"))
-                        {
-                            psaMindanaoMark.Add(row);
-                        }
-                    } 
-                    
-                    
-                    row++;
-                    int col;
-                    Console.WriteLine(plants.Count.ToString());
-                    foreach (Plant plant in plants)
+                    List<Cooperative> coops = cooperativeSessionData.getCooperativeByRegion(region.regionId);
+                    int coopCntr = 0;
+                    foreach (Cooperative coop in coops)
                     {
-                        if (plant != null) {
-                            excel.WriteCell(row, 2, region.name /*region.name*/);
-                            excel.WriteCell(row, 3, plant.name);
+                        coopCntr++;
 
-                            col = 3;
-                            foreach (DataValues dataValue in plant.dataValues)
+                        row++;
+                        writer.WriteLine();
+                        
+                        row++;
+                        writer.WriteLine();
+
+                        row++;
+                        writer.WriteLine(area.name + "," + region.name + "," + coop.name);
+
+                        IList<Plant> plants = plantSessionData.getAllPlantByCoop(coop.cooperativeId);
+                        
+                        //row++;
+                        //writer.WriteLine(area.name + "," + region.name + ",PSA,=SUM(D" + (row + 1) + ":D" + (row + plants.Count) + ")");
+                       
+                        int PSARow = row;
+
+                        //row++;
+                        int col;
+                        //Console.WriteLine(plants.Count.ToString());
+                        Console.WriteLine("Coop: " + coop.name + " " + ((double)coopCntr / coops.Count));
+                        txtOutput.AppendText(areaCntr + " out of" + areas.Count + ": " + (((double)coopCntr/coops.Count) * 100) + "%\n");
+                        loadingBar.Value = (int)(((double)coopCntr / coops.Count) * 100);
+
+                        int colCntr;
+                        int psaRowMarker=0;
+                        List<String> data1;
+                        List<String> data2;
+
+                        bool psaRegistered = false;
+                        
+                                        
+                        foreach (Plant plant in plants)
+                        {
+                            if (plant != null)
                             {
-                                col++;
-                                excel.WriteCell(row, 2, region.name);
+                                col = 3;
+                                colCntr = 1; //
+                                data1 = new List<String>();
+                                data2 = new List<String>();
 
-                                foreach (DataContent dataContent in dataContentSessionData.findDataContentByDataValuesId(dataValue))
+                                String psaOutput = "";
+                                
+                                foreach (DataValues dataValue in plant.dataValues)
                                 {
-                                    //SUMMATION OF PSA
-                                    excel.WriteCell(PSARow, col, "=sum(" + numUtil.getLetterByNumber(col) + (PSARow + 1) + ":" + numUtil.getLetterByNumber(col) + (PSARow + plants.Count) + ")");
+                                    col++;
+                                    List<string> tempData = null;
 
-                                    excel.WriteCell(row, col, dataContent.value);
-                                    col += 2;
+                                    if (colCntr == 1)
+                                    {
+                                        data1 = dataContentSessionData.findDataContentValueByDataValuesId(dataValue);
+                                        tempData = data1;
+                                    }
+                                    else if (colCntr == 2)
+                                    {
+                                        data2 = dataContentSessionData.findDataContentValueByDataValuesId(dataValue);
+                                        tempData = data2;
+                                    }
+
+                                    if (!psaRegistered) {
+                                        int column = 4;
+                                        
+                                        foreach (String str in tempData)
+                                        {
+                                            psaOutput += "=SUM(" + numUtil.getLetterByNumber(column) + ("row") + ":" + numUtil.getLetterByNumber(column) + ("rows") + "),";
+                                            column++;
+                                        }
+                                    }
+                                    
+                                    colCntr++;
+
+                                    col = 4;
                                 }
 
-                                col = 4;
+                                if(!psaRegistered){
+                                    row++;
+                                    psaRowMarker = row;
+                                    luzonPSASummary.Add(row.ToString());
+                                    psaOutput.Remove(psaOutput.LastIndexOf(','));
+                                    writer.WriteLine(area.name + "," + region.name + ",PSA," + psaOutput.Replace("rows", (row + plants.Count).ToString()).Replace("row", (row + 1).ToString()));
+                                }
+
+                                psaRegistered = true;
+                                    
+                                List<String> output = merge(data1, data2);
+                                output.Insert(0, area.name.Replace(",",""));
+                                output.Insert(1, region.name);
+                                output.Insert(2, plant.name.Replace(",",""));
+
+                                Console.WriteLine(String.Join(",", output));
+                                row++;
+                                writer.WriteLine(String.Join(",", output));
+
                             }
-
-                            row++;
                         }
+                       
+                        Console.WriteLine("-----------");
+
+
+                        col = 3;
                         
-                         
+                        colCntr = 1;
+                        data1 = new List<String>();
+                        data2 = new List<String>();
+
+                       
+                        foreach (CooperativeDataValues dataValue in coop.cooperativeDataValues)
+                        {
+                            List<string> tempData = null;
+                            col++;
+                            if (colCntr == 1) {
+                                data1 = cooperativeDataContentSessionData.findDataContentValueByDataValuesId(dataValue);
+                                tempData = data1;
+                            }
+                            else if (colCntr == 2) {
+                                data2 = cooperativeDataContentSessionData.findDataContentValueByDataValuesId(dataValue);
+                                tempData = data2;
+                            }
+                           
+                            colCntr++;
+                        }
+
+                        List<String> output2 = merge(data1, data2);
+                        
+                        int resColumn = 4;
+                        row++;
+                        String reserveDef = "";
+
+                        foreach(String str in output2){
+                            reserveDef += "=" + (psaRowMarker == 0 ? "0" : numUtil.getLetterByNumber(resColumn) + (psaRowMarker)) + "-" + numUtil.getLetterByNumber(resColumn) + (row) + ",";
+                            resColumn++;
+                        }
+
+                        output2.Insert(0, area.name.Replace(",", ""));
+                        output2.Insert(1, region.name);
+                        output2.Insert(2, "DEMAND");
+
+                        luzonDemandSummary.Add(row.ToString());
+                        row++;
+                        writer.WriteLine(String.Join(",", output2));
+
+
+                        if (!reserveDef.Equals("")) 
+                            reserveDef.Remove(reserveDef.LastIndexOf(','));
+                        
+                        writer.WriteLine(area.name + "," + region.name + ",RESERVE/DEFICIT," + reserveDef);
                     }
-
-                    col = 3;
-                    excel.WriteCell(row, 2, region.name);
-                    excel.WriteCell(row, 3, "DEMAND");
-                    if (area != null)
-                    {
-                        if (area.name.Equals("Luzon"))
-                        {
-                            demandLuzonMark.Add(row);
-                        }
-                        else if (area.name.Equals("Mindanao"))
-                        {
-                            demandMindanaoMark.Add(row);
-                        }
-                        else if (area.name.Equals("Visayas"))
-                        {
-                            demandVisayasMark.Add(row);
-                        }
-                    }
-                    
-
-
-                    excel.WriteCell(row + 1, 2, region.name);
-                    excel.WriteCell(row + 1, 3, "RESERVE / DEFICIT");
-
-                    foreach (CooperativeDataValues dataValue in coop.cooperativeDataValues)
-                    {
-                        col++;
-                        foreach (CooperativeDataContent dataContent in cooperativeDataContentSessionData.findAllDataContentByDataValue(dataValue))
-                        {
-                            excel.WriteCell(row, col, dataContent.value);
-                            excel.WriteCell(row + 1, col, "=" + numUtil.getLetterByNumber(col) + PSARow + "-" + numUtil.getLetterByNumber(col) + row);
-                            col += 2;
-                        }
-                        col = 4;
-                    }
-
-                    row++;
                 }
             }
 
-            excel.filter("A3" , "X" + row.ToString());
-            summary("Luzon", psaLuzonMark, demandLuzonMark, row + 4);
-            summary("Visayas", psaVisayasMark, demandVisayasMark, row + 9);
-            summary("Mindanao", psaMindanaoMark, demandMindanaoMark, row + 14);
+            writer.Close();
+            
+            //ExcelUtil excel = new ExcelUtil();
+            row++;
+            row++;
+            excel.Open(Application.StartupPath.ToString() + "\\testCSV.csv");
+            excel.Worksheet("testCSV");
+            
+            excel.WriteCell(row, 2, "Luzon");
+            excel.WriteCell(row, 3, "PSA");
+            excel.WriteCell(row, 4, Summary(luzonPSASummary).Replace(",",",D"));
+            excel.setBackgroundColor("D" + row, Color.Gainsboro);
+            excel.copy("D" + row,"E" + row + ":AG" +row);
 
-            excel.Save("test1.xls");
+            row++;
+
+            excel.WriteCell(row, 2, "Luzon");
+            excel.WriteCell(row, 3, "DEMAND");
+            excel.WriteCell(row, 4, Summary(luzonDemandSummary).Replace(",", ",D"));
+            excel.setBackgroundColor("D" + row, Color.LightCyan);
+            excel.copy("D" + row, "E" + row + ":AG" + row);
+
+            row++;
+
+            excel.WriteCell(row, 2, "Luzon");
+            excel.WriteCell(row, 3, "RESERVE/DEFICIT");
+            excel.WriteCell(row, 4, "=D" + (row-2) + "-D" + (row-1));
+            excel.setBackgroundColor("D" + row, Color.LightCyan);
+            excel.copy("D" + row, "E" + row + ":AG" + row);
+
+            excel.Save("newExcel.xls");
+
+            GC.Collect();
             Console.WriteLine("Save!");
-
         }
+
+        private String Summary(List<String> source)
+        {
+            String summary ="=SUBTOTAL(9," + String.Join(",",source)  + ")";
+            return summary;
+        }
+
 
         private void summary(String summaryArea,List<Int32> psaRowMarks, List<Int32> demandRowMarks, Int32 startingRow) {
             excel.WriteCell(startingRow, 2, summaryArea);
             excel.WriteCell(startingRow, 3, "PSA");
             excel.WriteCell(startingRow, 4, ("=SUBTOTAL(9, " + String.Join(",", psaRowMarks.ToArray()) + ")").Replace(",",",D").Replace(" ", ""));
-          
-            excel.WriteCell(startingRow + 1, 3, "DEMAND");
-            excel.WriteCell(startingRow + 1, 4, ("=SUBTOTAL(9, " + String.Join(",", demandRowMarks.ToArray()) + ")").Replace(",", ",D").Replace(" ", "")); 
-            excel.WriteCell(startingRow + 2, 3, "RESERVE / DEFICIT");
-        }
-        
-        private void generatePSA(IList<Plant> plants) {
+            excel.copy(numUtil.getLetterByNumber(4) + startingRow, "E" + startingRow + ":" + "AG" + startingRow);
+            excel.setBackgroundColor("D"+ startingRow + ":AG" + startingRow, Color.Wheat);
             
+            excel.WriteCell(startingRow + 1, 3, "DEMAND");
+            excel.WriteCell(startingRow + 1, 4, ("=SUBTOTAL(9, " + String.Join(",", demandRowMarks.ToArray()) + ")").Replace(",", ",D").Replace(" ", ""));
+            excel.copy(numUtil.getLetterByNumber(4) + (startingRow + 1), "E" + (startingRow + 1) + ":" + "AG" + (startingRow+1));
+            excel.setBackgroundColor("D" + (startingRow+1) + ":AG" + (startingRow+1), Color.Gainsboro);
+            
+            excel.WriteCell(startingRow + 2, 3, "RESERVE / DEFICIT");
+            excel.WriteCell(startingRow + 2, 4, "=D" + startingRow + "-" + "D" + (startingRow+1));
+            excel.copy(numUtil.getLetterByNumber(4) + (startingRow+2), "E" + (startingRow + 2) + ":" + "AG" + (startingRow + 2));
+            excel.setBackgroundColor("D" + (startingRow + 2) + ":AG" + (startingRow + 2), Color.LightCoral);
+        }
+
+        private List<String> merge(List<String> list1, List<String> list2) {
+            List<String> data = new List<String>();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                try
+                {
+                    data.Add(list1[i]);
+                    data.Add(list2[i]);
+                }
+                catch (IndexOutOfRangeException iore) {
+                    data.Add("0");
+                }catch(ArgumentOutOfRangeException aore){
+                    data.Add("0");
+                }
+               
+            }
+
+            return data;
         }
     }
 }
