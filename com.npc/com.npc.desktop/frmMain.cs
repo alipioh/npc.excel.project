@@ -54,6 +54,7 @@ namespace com.npc.desktop
         private void frmMain_Load(object sender, EventArgs e)
         {
             propertyGrid.SelectedObject = new Excel();
+            button2_Click(sender, e);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -414,6 +415,13 @@ namespace com.npc.desktop
             List<String> luzonPSASummary = new List<String>();
             List<String> luzonDemandSummary = new List<String>();
 
+            List<String> mindanaoPSASummary = new List<String>();
+            List<String> mindanaoDemandSummary = new List<String>();
+
+            List<String> visayasPSASummary = new List<String>();
+            List<String> visayasDemandSummary = new List<String>();
+
+
             //testing for changes
             row = 0;
             int areaCntr = 0;
@@ -428,9 +436,6 @@ namespace com.npc.desktop
                     {
                         coopCntr++;
 
-                        row++;
-                        writer.WriteLine();
-                        
                         row++;
                         writer.WriteLine();
 
@@ -504,7 +509,18 @@ namespace com.npc.desktop
                                 if(!psaRegistered){
                                     row++;
                                     psaRowMarker = row;
-                                    luzonPSASummary.Add(row.ToString());
+
+                                    if (area.name.Equals("Luzon")) {
+                                        luzonPSASummary.Add(row.ToString());
+                                    }
+                                    else if (area.name.Equals("Mindanao"))
+                                    {
+                                        mindanaoPSASummary.Add(row.ToString());
+                                    }
+                                    else if(area.name.Equals("Visayas")){
+                                        visayasPSASummary.Add(row.ToString());
+                                    }
+
                                     psaOutput.Remove(psaOutput.LastIndexOf(','));
                                     writer.WriteLine(area.name + "," + region.name + ",PSA," + psaOutput.Replace("rows", (row + plants.Count).ToString()).Replace("row", (row + 1).ToString()));
                                 }
@@ -519,7 +535,6 @@ namespace com.npc.desktop
                                 Console.WriteLine(String.Join(",", output));
                                 row++;
                                 writer.WriteLine(String.Join(",", output));
-
                             }
                         }
                        
@@ -532,7 +547,6 @@ namespace com.npc.desktop
                         data1 = new List<String>();
                         data2 = new List<String>();
 
-                       
                         foreach (CooperativeDataValues dataValue in coop.cooperativeDataValues)
                         {
                             List<string> tempData = null;
@@ -564,7 +578,14 @@ namespace com.npc.desktop
                         output2.Insert(1, region.name);
                         output2.Insert(2, "DEMAND");
 
-                        luzonDemandSummary.Add(row.ToString());
+                        if (area.name.Equals("Luzon")) {
+                            luzonDemandSummary.Add(row.ToString());
+                        }else if (area.name.Equals("Mindanao")) {
+                            mindanaoDemandSummary.Add(row.ToString());
+                        }else if(area.name.Equals("Visayas")){
+                            visayasDemandSummary.Add(row.ToString());
+                        }
+
                         row++;
                         writer.WriteLine(String.Join(",", output2));
 
@@ -584,7 +605,60 @@ namespace com.npc.desktop
             row++;
             excel.Open(Application.StartupPath.ToString() + "\\testCSV.csv");
             excel.Worksheet("testCSV");
+
+            excel.WriteCell(2, 1, "Area");
+            excel.WriteCell(2, 2, "Region");
+
+            for (int index = 0; index < luzonPSASummary.Count; index++)
+            {
+                excel.setBackgroundColor("A" + luzonPSASummary[index].ToString() + ":AG" + luzonPSASummary[index].ToString(), Color.Aqua);
+            }
+
+            for (int index = 0; index < luzonDemandSummary.Count; index++) {
+                excel.setBackgroundColor("A" + luzonDemandSummary[index].ToString() + ":AG" + luzonDemandSummary[index].ToString(), Color.Wheat);
+                excel.setBackgroundColor("A" + (Int32.Parse(luzonDemandSummary[index].ToString()) + 1) + ":AG" + (Int32.Parse(luzonDemandSummary[index].ToString()) + 1), Color.Gainsboro);
+            }
+
+            for (int index = 0; index < mindanaoPSASummary.Count; index++) {
+                excel.setBackgroundColor("A" + mindanaoPSASummary[index].ToString() + ":AG" + mindanaoPSASummary[index].ToString(), Color.Aqua);
+            }
+
+            for (int index = 0; index < mindanaoDemandSummary.Count; index++)
+            {
+                excel.setBackgroundColor("A" + mindanaoDemandSummary[index].ToString() + ":AG" + mindanaoDemandSummary[index].ToString(), Color.Wheat);
+                excel.setBackgroundColor("A" + (Int32.Parse(mindanaoDemandSummary[index].ToString()) + 1) + ":AG" + (Int32.Parse(mindanaoDemandSummary[index].ToString()) + 1), Color.Gainsboro);
+            }
+
+            for (int index = 0; index < visayasPSASummary.Count; index++)
+            {
+                excel.setBackgroundColor("A" + visayasPSASummary[index].ToString() + ":AG" + visayasPSASummary[index].ToString(), Color.Aqua);
+            }
+
+            for (int index = 0; index < visayasPSASummary.Count; index++)
+            {
+                excel.setBackgroundColor("A" + visayasPSASummary[index].ToString() + ":AG" + visayasPSASummary[index].ToString(), Color.Wheat);
+                excel.setBackgroundColor("A" + (Int32.Parse(visayasPSASummary[index].ToString()) + 1) + ":AG" + (Int32.Parse(visayasPSASummary[index].ToString()) + 1), Color.Gainsboro);
+            }
+
+            int colHeader = 4;
+            int colDataHeader = 2008;
+            for (int yr = 2008; yr <= 2022 + (2022 - 2008); yr++)
+            {
+                if (yr % 2 == 0)
+                {
+                    excel.WriteCell(1, colHeader, colDataHeader.ToString());
+                    excel.Merge(numUtil.getLetterByNumber(colHeader) + "1", numUtil.getLetterByNumber(colHeader + 1) + "1");
+                    excel.WriteCell(2, colHeader, "PSA DEMAND");
+                    excel.WriteCell(2, colHeader + 1, "E. SALES");
+                    colDataHeader++;
+                }
+
+                colHeader++;
+            }
             
+
+            excel.filter("A1", "B" + row);
+
             excel.WriteCell(row, 2, "Luzon");
             excel.WriteCell(row, 3, "PSA");
             excel.WriteCell(row, 4, Summary(luzonPSASummary).Replace(",",",D"));
@@ -607,7 +681,62 @@ namespace com.npc.desktop
             excel.setBackgroundColor("D" + row, Color.LightCyan);
             excel.copy("D" + row, "E" + row + ":AG" + row);
 
+            row++;
+            row++;
+
+
+            excel.WriteCell(row, 2, "Visayas");
+            excel.WriteCell(row, 3, "PSA");
+            excel.WriteCell(row, 4, Summary(visayasPSASummary).Replace(",", ",D"));
+            excel.setBackgroundColor("D" + row, Color.Gainsboro);
+            excel.copy("D" + row, "E" + row + ":AG" + row);
+
+            row++;
+
+            excel.WriteCell(row, 2, "Visayas");
+            excel.WriteCell(row, 3, "DEMAND");
+            excel.WriteCell(row, 4, Summary(visayasDemandSummary).Replace(",", ",D"));
+            excel.setBackgroundColor("D" + row, Color.LightCyan);
+            excel.copy("D" + row, "E" + row + ":AG" + row);
+
+            row++;
+
+            excel.WriteCell(row, 2, "Visayas");
+            excel.WriteCell(row, 3, "RESERVE/DEFICIT");
+            excel.WriteCell(row, 4, "=D" + (row - 2) + "-D" + (row - 1));
+            excel.setBackgroundColor("D" + row, Color.LightCyan);
+            excel.copy("D" + row, "E" + row + ":AG" + row);
+
+            row++;
+            row++;
+
+            excel.WriteCell(row, 2, "Mindanao");
+            excel.WriteCell(row, 3, "PSA");
+            excel.WriteCell(row, 4, Summary(mindanaoPSASummary).Replace(",", ",D"));
+            excel.setBackgroundColor("D" + row, Color.Gainsboro);
+            excel.copy("D" + row, "E" + row + ":AG" + row);
+
+            row++;
+
+            excel.WriteCell(row, 2, "Mindanao");
+            excel.WriteCell(row, 3, "DEMAND");
+            excel.WriteCell(row, 4, Summary(mindanaoDemandSummary).Replace(",", ",D"));
+            excel.setBackgroundColor("D" + row, Color.LightCyan);
+            excel.copy("D" + row, "E" + row + ":AG" + row);
+
+            row++;
+
+            excel.WriteCell(row, 2, "Mindanao");
+            excel.WriteCell(row, 3, "RESERVE/DEFICIT");
+            excel.WriteCell(row, 4, "=D" + (row - 2) + "-D" + (row - 1));
+            excel.setBackgroundColor("D" + row, Color.LightCyan);
+
+            excel.Format("A3:AG" + row, "#,##0.00");
+            
+            excel.copy("D" + row, "E" + row + ":AG" + row);
             excel.Save("newExcel.xls");
+
+
 
             GC.Collect();
             Console.WriteLine("Save!");

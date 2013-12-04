@@ -33,6 +33,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.loadingBar = new System.Windows.Forms.ProgressBar();
             this.button8 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pnlPSA = new System.Windows.Forms.Panel();
@@ -49,7 +50,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.loadingBar = new System.Windows.Forms.ProgressBar();
+            this.panel3 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -58,6 +59,7 @@
             this.panel2.SuspendLayout();
             this.pnlPSA.SuspendLayout();
             this.pnlDemand.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // propertyGrid
@@ -87,6 +89,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.txtOutput);
+            this.splitContainer1.Panel1.Controls.Add(this.panel3);
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
             // 
             // splitContainer1.Panel2
@@ -102,14 +105,12 @@
             this.txtOutput.Location = new System.Drawing.Point(0, 73);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(655, 200);
+            this.txtOutput.Size = new System.Drawing.Size(655, 172);
             this.txtOutput.TabIndex = 4;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(this.loadingBar);
-            this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button2);
@@ -119,13 +120,22 @@
             this.panel1.Size = new System.Drawing.Size(655, 73);
             this.panel1.TabIndex = 3;
             // 
+            // loadingBar
+            // 
+            this.loadingBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadingBar.Location = new System.Drawing.Point(84, 2);
+            this.loadingBar.Name = "loadingBar";
+            this.loadingBar.Size = new System.Drawing.Size(568, 25);
+            this.loadingBar.TabIndex = 6;
+            // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(301, 3);
+            this.button8.Location = new System.Drawing.Point(1, 3);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.Size = new System.Drawing.Size(85, 23);
             this.button8.TabIndex = 5;
-            this.button8.Text = "Query";
+            this.button8.Text = "Generate";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
@@ -217,7 +227,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(96, 23);
             this.button5.TabIndex = 7;
-            this.button5.Text = "Save";
+            this.button5.Text = "Save PSA / Demand";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -261,12 +271,15 @@
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
-            // loadingBar
+            // panel3
             // 
-            this.loadingBar.Location = new System.Drawing.Point(380, 5);
-            this.loadingBar.Name = "loadingBar";
-            this.loadingBar.Size = new System.Drawing.Size(152, 20);
-            this.loadingBar.TabIndex = 6;
+            this.panel3.Controls.Add(this.button8);
+            this.panel3.Controls.Add(this.loadingBar);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 245);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(655, 28);
+            this.panel3.TabIndex = 7;
             // 
             // frmMain
             // 
@@ -288,6 +301,7 @@
             this.pnlPSA.PerformLayout();
             this.pnlDemand.ResumeLayout(false);
             this.pnlDemand.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -316,5 +330,6 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.ProgressBar loadingBar;
+        private System.Windows.Forms.Panel panel3;
     }
 }

@@ -138,6 +138,14 @@ namespace com.npc.desktop.utils
         #endregion
 
         #region FILTER
+        public void Format(String range, String pattern) {
+            workSheet.Range[range].NumberFormat = pattern;
+        }
+        public void Merge(String rangeFrom, String rangeTo) {
+            workSheet.Range[rangeFrom + ":" + rangeTo].Merge();
+            workSheet.Range[rangeFrom + ":" + rangeTo].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+        }
+
         public void filter(String rangeFrom, String rangeTo)
         {
             workSheet.EnableAutoFilter = true;
